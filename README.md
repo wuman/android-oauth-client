@@ -168,21 +168,6 @@ integrations for popular social network services such as Flickr, LinkedIn,
 Twitter, etc.
 
 
-INCLUDING IN YOUR PROJECT
--------------------------
-
-There are two ways to include android-oauth-client in your projects:
-
-1. You can download the released jar file in the [Downloads section](https://github.com/wuman/android-oauth-client/downloads).
-2. If you use Maven to build your project you can simply add a dependency to this library.
-
-        <dependency>
-            <groupId>com.wu-man</groupId>
-            <artifactId>android-oauth-client</artifactId>
-            <version>0.1</version>
-        </dependency>
-
-
 CONTRIBUTE
 ----------
 
