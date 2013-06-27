@@ -309,41 +309,41 @@
                                 </sign>
                             </configuration>
                         </plugin>
+                        <plugin>
+                            <groupId>org.apache.maven.plugins</groupId>
+                            <artifactId>maven-jarsigner-plugin</artifactId>
+                            <version>${version.plugin.maven-jarsigner}</version>
+                            <inherited>true</inherited>
+                            <executions>
+                                <execution>
+                                    <id>sign-application-apk</id>
+                                    <phase>package</phase>
+                                    <configuration>
+                                        <removeExistingSignatures>true</removeExistingSignatures>
+                                        <archiveDirectory />
+                                        <archive>${project.build.directory}/${project.build.finalName}.${project.packaging}</archive>
+                                        <verbose>true</verbose>
+                                        <certs>true</certs>
+                                        <keystore>${sign.keystore}</keystore>
+                                        <alias>${sign.alias}</alias>
+                                        <storepass>${sign.storepass}</storepass>
+                                        <keypass>${sign.keypass}</keypass>
+                                        <arguments>
+                                            <argument>-sigalg</argument>
+                                            <argument>MD5withRSA</argument>
+                                            <argument>-digestalg</argument>
+                                            <argument>SHA1</argument>
+                                        </arguments>
+                                    </configuration>
+                                    <goals>
+                                        <goal>sign</goal>
+                                    </goals>
+                                </execution>
+                            </executions>
+                        </plugin>
                     </plugins>
                 </pluginManagement>
                 <plugins>
-                    <plugin>
-                        <groupId>org.apache.maven.plugins</groupId>
-                        <artifactId>maven-jarsigner-plugin</artifactId>
-                        <version>${version.plugin.maven-jarsigner}</version>
-                        <inherited>true</inherited>
-                        <executions>
-                            <execution>
-                                <id>sign-application-apk</id>
-                                <phase>package</phase>
-                                <configuration>
-                                    <removeExistingSignatures>true</removeExistingSignatures>
-                                    <archiveDirectory />
-                                    <archive>${project.build.directory}/${project.build.finalName}.${project.packaging}</archive>
-                                    <verbose>true</verbose>
-                                    <certs>true</certs>
-                                    <keystore>${sign.keystore}</keystore>
-                                    <alias>${sign.alias}</alias>
-                                    <storepass>${sign.storepass}</storepass>
-                                    <keypass>${sign.keypass}</keypass>
-                                    <arguments>
-                                        <argument>-sigalg</argument>
-                                        <argument>MD5withRSA</argument>
-                                        <argument>-digestalg</argument>
-                                        <argument>SHA1</argument>
-                                    </arguments>
-                                </configuration>
-                                <goals>
-                                    <goal>sign</goal>
-                                </goals>
-                            </execution>
-                        </executions>
-                    </plugin>
                     <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-gpg-plugin</artifactId>
