@@ -37,6 +37,6 @@
 # Needed by google-api-client-android when linking against an older platform version
 -dontwarn com.google.api.client.googleapis.extensions.android.**
 
-# Do not obfuscate or shrink android-oauth-client
+# Do not obfuscate but allow shrinking of android-oauth-client
 -keepnames class com.wuman.android.auth.** { *; }
 
