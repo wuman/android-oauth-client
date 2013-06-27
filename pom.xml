@@ -202,8 +202,8 @@
                         <tagNameFormat>v@{project.version}</tagNameFormat>
                         <releaseProfiles>release-sign-artifacts</releaseProfiles>
                         <autoVersionSubmodules>true</autoVersionSubmodules>
-                        <preparationGoals>android:manifest-update scm:checkin -Dmessage="[maven-release-plugin] release"</preparationGoals>
-                        <completionGoals>android:manifest-update scm:checkin -Dmessage="[maven-release-plugin] prepare for next development iteration"</completionGoals>
+                        <preparationGoals>android:manifest-update scm:checkin -Dmessage="prepareRelease"</preparationGoals>
+                        <completionGoals>android:manifest-update scm:checkin -Dmessage="prepareNextVersion"</completionGoals>
                     </configuration>
                 </plugin>
                 <plugin>
