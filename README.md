@@ -196,6 +196,36 @@ integrations for popular social network services such as Flickr, LinkedIn,
 Twitter, etc.
 
 
+HOW TO BUILD THE PROJECT
+------------------------
+
+Android OAuth Client is available for download from the Maven Central repository.
+You may also include it as a dependency by including the following coordinates:
+
+```xml
+<dependency>
+  <groupId>com.wu-man</groupId>
+  <artifactId>android-oauth-client</artifactId>
+  <version>0.0.1</version>
+</dependency>
+```
+
+To build just the `jar` library locally, you may run the following command:
+
+    mvn -f library/pom.xml clean package
+
+To build the samples app `apk`, you must first install its dependency
+[volley](https://android.googlesource.com/platform/frameworks/volley/) as a 
+local Maven artifact:
+
+    # install volley locally
+    git clone https://github.com/wuman/volley-mvn-install.git
+    ./volley-mvn-install/install.sh
+
+    # build and install both library jar and samples application apk
+    mvn clean install
+
+
 CONTRIBUTE
 ----------
 
