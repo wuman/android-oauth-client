@@ -86,13 +86,16 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-release-plugin</artifactId>
+                <configuration>
+                    <releaseProfiles>release-gpg-sign-artifacts,release-sign-apk</releaseProfiles>
+                </configuration>
             </plugin>
         </plugins>
     </build>
     
     <profiles>
         <profile>
-            <id>release</id>
+            <id>release-sign-apk</id>
             <activation>
                 <property>
                     <name>performRelease</name>
@@ -103,7 +106,85 @@
                 <plugins>
                     <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-enforcer-plugin</artifactId>
+                        <version>${version.plugin.maven-enforcer}</version>
+                        <executions>
+                            <execution>
+                                <id>enforce-signing-properties</id>
+                                <goals>
+                                    <goal>enforce</goal>
+                                </goals>
+                                <configuration>
+                                    <rules>
+                                        <requireProperty>
+                                            <property>sign.keystore</property>
+                                            <message>The 'sign.keystore' property is missing.</message>
+                                        </requireProperty>
+                                        <requireFilesExist>
+                                            <files>
+                                                <file>${sign.keystore}</file>
+                                            </files>
+                                            <message>The 'sign.keystore' property does not point to a file.</message>
+                                        </requireFilesExist>
+                                        <requireProperty>
+                                            <property>sign.alias</property>
+                                            <message>The 'sign.alias' property is missing.</message>
+                                        </requireProperty>
+                                        <requireProperty>
+                                            <property>sign.storepass</property>
+                                            <message>The 'sign.storepass' property is missing.</message>
+                                        </requireProperty>
+                                        <requireProperty>
+                                            <property>sign.keypass</property>
+                                            <message>The 'sign.keypass' property is missing.</message>
+                                        </requireProperty>
+                                    </rules>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+                    <plugin>
+                        <groupId>com.jayway.maven.plugins.android.generation2</groupId>
+                        <artifactId>android-maven-plugin</artifactId>
+                        <version>${version.plugin.android-maven}</version>
+                        <inherited>true</inherited>
+                        <configuration>
+                            <sign>
+                                <debug>false</debug>
+                            </sign>
+                        </configuration>
+                    </plugin>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-jarsigner-plugin</artifactId>
+                        <version>${version.plugin.maven-jarsigner}</version>
+                        <inherited>true</inherited>
+                        <executions>
+                            <execution>
+                                <id>sign-application-apk</id>
+                                <phase>package</phase>
+                                <configuration>
+                                    <removeExistingSignatures>true</removeExistingSignatures>
+                                    <archiveDirectory />
+                                    <archive>${project.build.directory}/${project.build.finalName}.${project.packaging}</archive>
+                                    <verbose>true</verbose>
+                                    <certs>true</certs>
+                                    <keystore>${sign.keystore}</keystore>
+                                    <alias>${sign.alias}</alias>
+                                    <storepass>${sign.storepass}</storepass>
+                                    <keypass>${sign.keypass}</keypass>
+                                    <arguments>
+                                        <argument>-sigalg</argument>
+                                        <argument>MD5withRSA</argument>
+                                        <argument>-digestalg</argument>
+                                        <argument>SHA1</argument>
+                                    </arguments>
+                                </configuration>
+                                <goals>
+                                    <goal>sign</goal>
+                                </goals>
+                            </execution>
+                        </executions>
                     </plugin>
                 </plugins>
             </build>
