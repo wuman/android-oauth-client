@@ -124,9 +124,6 @@
                             <versionCodeUpdateFromVersion>true</versionCodeUpdateFromVersion>
                         </manifest>
                         <extractDuplicates>true</extractDuplicates>
-                        <sign>
-                            <debug>false</debug>
-                        </sign>
                     </configuration>
                     <extensions>true</extensions>
                 </plugin>
@@ -195,38 +192,6 @@
                     <configuration>
                         <downloadJavadocs>true</downloadJavadocs>
                     </configuration>
-                </plugin>
-                <plugin>
-                    <groupId>org.apache.maven.plugins</groupId>
-                    <artifactId>maven-jarsigner-plugin</artifactId>
-                    <version>${version.plugin.maven-jarsigner}</version>
-                    <inherited>true</inherited>
-                    <executions>
-                        <execution>
-                            <id>sign-application-apk</id>
-                            <phase>package</phase>
-                            <configuration>
-                                <removeExistingSignatures>true</removeExistingSignatures>
-                                <archiveDirectory />
-                                <archive>${project.build.directory}/${project.build.finalName}.${project.packaging}</archive>
-                                <verbose>true</verbose>
-                                <certs>true</certs>
-                                <keystore>${sign.keystore}</keystore>
-                                <alias>${sign.alias}</alias>
-                                <storepass>${sign.storepass}</storepass>
-                                <keypass>${sign.keypass}</keypass>
-                                <arguments>
-                                    <argument>-sigalg</argument>
-                                    <argument>MD5withRSA</argument>
-                                    <argument>-digestalg</argument>
-                                    <argument>SHA1</argument>
-                                </arguments>
-                            </configuration>
-                            <goals>
-                                <goal>sign</goal>
-                            </goals>
-                        </execution>
-                    </executions>
                 </plugin>
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
@@ -333,6 +298,48 @@
             </activation>
             <build>
                 <plugins>
+                    <plugin>
+                        <groupId>com.jayway.maven.plugins.android.generation2</groupId>
+                        <artifactId>android-maven-plugin</artifactId>
+                        <version>${version.plugin.android-maven}</version>
+                        <configuration>
+                            <sign>
+                                <debug>false</debug>
+                            </sign>
+                        </configuration>
+                    </plugin>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-jarsigner-plugin</artifactId>
+                        <version>${version.plugin.maven-jarsigner}</version>
+                        <inherited>true</inherited>
+                        <executions>
+                            <execution>
+                                <id>sign-application-apk</id>
+                                <phase>package</phase>
+                                <configuration>
+                                    <removeExistingSignatures>true</removeExistingSignatures>
+                                    <archiveDirectory />
+                                    <archive>${project.build.directory}/${project.build.finalName}.${project.packaging}</archive>
+                                    <verbose>true</verbose>
+                                    <certs>true</certs>
+                                    <keystore>${sign.keystore}</keystore>
+                                    <alias>${sign.alias}</alias>
+                                    <storepass>${sign.storepass}</storepass>
+                                    <keypass>${sign.keypass}</keypass>
+                                    <arguments>
+                                        <argument>-sigalg</argument>
+                                        <argument>MD5withRSA</argument>
+                                        <argument>-digestalg</argument>
+                                        <argument>SHA1</argument>
+                                    </arguments>
+                                </configuration>
+                                <goals>
+                                    <goal>sign</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
                     <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-gpg-plugin</artifactId>
