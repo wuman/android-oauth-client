@@ -183,7 +183,7 @@ You may [file an issue](https://github.com/wuman/android-oauth-client/issues/new
 if you find bugs or would like to add a new feature.
 
 We do not have a mailing list.  All questions should be asked and will be answered
-on [StackOverflow using the `android-oauth-client` tag](http://stackoverflow.com/questions/tagged/android-oauth-client).
+on [StackOverflow using the android-oauth-client tag](http://stackoverflow.com/questions/tagged/android-oauth-client).
 
 
 DEVELOPED BY
