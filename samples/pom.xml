@@ -40,7 +40,7 @@
         <dependency>
             <groupId>com.google.android</groupId>
             <artifactId>volley</artifactId>
-            <version>2013.06.26</version>
+            <version>1</version>
         </dependency>
         <dependency>
             <groupId>org.robolectric</groupId>
