@@ -196,8 +196,8 @@ integrations for popular social network services such as Flickr, LinkedIn,
 Twitter, etc.
 
 
-HOW TO BUILD THE PROJECT
-------------------------
+HOW TO USE THE LIBRARY
+----------------------
 
 Android OAuth Client is available for download from the Maven Central repository.
 You may also include it as a dependency by including the following coordinates:
@@ -209,6 +209,10 @@ You may also include it as a dependency by including the following coordinates:
   <version>0.0.1</version>
 </dependency>
 ```
+
+
+HOW TO BUILD THE PROJECT
+------------------------
 
 To build just the `jar` library locally, you may run the following command:
 
