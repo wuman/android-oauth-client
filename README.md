@@ -174,6 +174,17 @@ CONTRIBUTE
 If you would like to contribute code to android-oauth-client you can do so through 
 GitHub by forking the repository and sending a pull request.
 
+In general if you are contributing we ask you to follow the 
+[AOSP coding style guidelines](http://source.android.com/source/code-style.html).
+If you are using an IDE such as Eclipse, it is easiest to use the
+[AOSP style formatters](http://source.android.com/source/using-eclipse.html#eclipse-formatting).
+
+You may [file an issue](https://github.com/wuman/android-oauth-client/issues/new)
+if you find bugs or would like to add a new feature.
+
+We do not have a mailing list.  All questions should be asked and will be answered
+on [StackOverflow using the `android-oauth-client` tag](http://stackoverflow.com/questions/tagged/android-oauth-client).
+
 
 DEVELOPED BY
 ------------
