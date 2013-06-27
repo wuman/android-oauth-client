@@ -1,0 +1,32 @@
+<resources>
+
+    <string name="app_name_short">android-oauth-client-samples</string>
+    <string name="app_name_long">Android OAuth Client Samples</string>
+    <string name="loading">Loading</string>
+    <string name="error_occured">Error</string>
+    <string name="empty">Empty</string>
+    <string name="get_token">Get Token</string>
+    <string name="delete_token">Delete Token</string>
+    <string name="delete_cookies">Delete cookies</string>
+    <string name="sample_oauth10a_linkedin">Simple OAuth 1.0a (LinkedIn)</string>
+    <string name="sample_oauth2implicit_foursquare">Simple OAuth 2.0 Implicit (foursquare)</string>
+    <string name="sample_oauth2explicit_linkedin">Simple OAuth 2.0 Explicit (LinkedIn)</string>
+    <string name="sample_oauth2explicit_foursquare">Simple OAuth 2.0 Explicit (foursquare)</string>
+    <string name="sample_customizedui">Customized UI</string>
+    <string name="sample_flickr">Flickr (OAuth 1.0a)</string>
+    <string name="sample_github">GitHub (OAuth 2.0 Explicit)</string>
+    <string name="sample_instagram">Instagram (OAuth 2.0 Implicit)</string>
+    <string name="sample_twitter">Twitter (OAuth 1.0a)</string>
+    <string name="sample_plurk">Plurk (OAuth 1.0a)</string>
+    <string name="token_foursquare_implicit">foursquareimplicit</string>
+    <string name="token_foursquare_explicit">foursquareexplicit</string>
+    <string name="token_linkedin_explicit">linkedinexplicit</string>
+    <string name="token_linkedin_10a">linkedin10a</string>
+    <string name="token_flickr">flickr</string>
+    <string name="token_github">github</string>
+    <string name="token_instagram">instagram</string>
+    <string name="token_twitter">twitter</string>
+    <string name="token_plurk">plurk</string>
+    <string name="token_customui">customui</string>
+
+</resources>

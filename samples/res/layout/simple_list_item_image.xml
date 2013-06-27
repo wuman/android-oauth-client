@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:minHeight="?android:attr/listPreferredItemHeight" >
+
+    <com.android.volley.toolbox.NetworkImageView
+        android:id="@android:id/icon1"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/thumbnail_height"
+        android:scaleType="centerCrop" />
+
+    <ImageView
+        android:id="@android:id/background"
+        android:layout_width="match_parent"
+        android:layout_height="@android:dimen/app_icon_size"
+        android:src="@color/translucent_shadow" />
+
+    <com.android.volley.toolbox.NetworkImageView
+        android:id="@android:id/icon2"
+        android:layout_width="@android:dimen/app_icon_size"
+        android:layout_height="@android:dimen/app_icon_size"
+        android:layout_margin="?android:attr/scrollbarSize"
+        android:scaleType="centerCrop" />
+
+    <TextView
+        android:id="@android:id/text1"
+        style="?android:attr/textAppearanceLarge"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="?android:attr/scrollbarSize"
+        android:layout_toRightOf="@android:id/icon2"
+        android:singleLine="true" />
+
+</RelativeLayout>

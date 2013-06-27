@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android" android:versionCode="1" android:versionName="0.0.1-SNAPSHOT" package="com.wuman.oauth.samples">
+
+    <uses-sdk android:minSdkVersion="9" android:targetSdkVersion="17"/>
+
+    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+
+    <application android:allowBackup="false" android:hardwareAccelerated="true" android:icon="@drawable/ic_launcher" android:label="@string/app_name_long" android:name=".SamplesApplication">
+        <activity android:label="@string/app_name_long" android:launchMode="singleInstance" android:name=".SamplesActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+
+                <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
+        </activity>
+        <activity android:configChanges="screenSize|orientation" android:label="@string/sample_instagram" android:name=".instagram.InstagramActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+
+                <category android:name="com.wuman.oauth.samples.EXAMPLE"/>
+            </intent-filter>
+        </activity>
+        <activity android:configChanges="screenSize|orientation" android:label="@string/sample_twitter" android:name=".twitter.TwitterActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+
+                <category android:name="com.wuman.oauth.samples.EXAMPLE"/>
+            </intent-filter>
+        </activity>
+        <activity android:configChanges="screenSize|orientation" android:label="@string/sample_flickr" android:name=".flickr.FlickrActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+
+                <category android:name="com.wuman.oauth.samples.EXAMPLE"/>
+            </intent-filter>
+        </activity>
+        <activity android:configChanges="screenSize|orientation" android:label="@string/sample_github" android:name=".github.GitHubActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+
+                <category android:name="com.wuman.oauth.samples.EXAMPLE"/>
+            </intent-filter>
+        </activity>
+        <activity android:configChanges="screenSize|orientation" android:label="@string/sample_plurk" android:name=".plurk.PlurkActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+
+                <category android:name="com.wuman.oauth.samples.EXAMPLE"/>
+            </intent-filter>
+        </activity>
+        <activity android:configChanges="screenSize|orientation" android:label="@string/sample_oauth2explicit_linkedin" android:name=".linkedin.SimpleOAuth2ExplicitActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+
+                <category android:name="com.wuman.oauth.samples.EXAMPLE"/>
+            </intent-filter>
+        </activity>
+        <activity android:configChanges="screenSize|orientation" android:label="@string/sample_oauth10a_linkedin" android:name=".linkedin.SimpleOAuth10aActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+
+                <category android:name="com.wuman.oauth.samples.EXAMPLE"/>
+            </intent-filter>
+        </activity>
+        <activity android:configChanges="screenSize|orientation" android:label="@string/sample_oauth2implicit_foursquare" android:name=".foursquare.SimpleOAuth2ImplicitActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+
+                <category android:name="com.wuman.oauth.samples.EXAMPLE"/>
+            </intent-filter>
+        </activity>
+        <activity android:configChanges="screenSize|orientation" android:label="@string/sample_oauth2explicit_foursquare" android:name=".foursquare.SimpleOAuth2ExplicitActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+
+                <category android:name="com.wuman.oauth.samples.EXAMPLE"/>
+            </intent-filter>
+        </activity>
+        <activity android:configChanges="screenSize|orientation" android:label="@string/sample_customizedui" android:name="com.wuman.oauth.samples.CustomizedProgressActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+
+                <category android:name="com.wuman.oauth.samples.EXAMPLE"/>
+            </intent-filter>
+        </activity>
+    </application>
+
+</manifest>
