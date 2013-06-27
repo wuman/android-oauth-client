@@ -297,17 +297,21 @@
                 </property>
             </activation>
             <build>
+                <pluginManagement>
+                    <plugins>
+                        <plugin>
+                            <groupId>com.jayway.maven.plugins.android.generation2</groupId>
+                            <artifactId>android-maven-plugin</artifactId>
+                            <version>${version.plugin.android-maven}</version>
+                            <configuration>
+                                <sign>
+                                    <debug>false</debug>
+                                </sign>
+                            </configuration>
+                        </plugin>
+                    </plugins>
+                </pluginManagement>
                 <plugins>
-                    <plugin>
-                        <groupId>com.jayway.maven.plugins.android.generation2</groupId>
-                        <artifactId>android-maven-plugin</artifactId>
-                        <version>${version.plugin.android-maven}</version>
-                        <configuration>
-                            <sign>
-                                <debug>false</debug>
-                            </sign>
-                        </configuration>
-                    </plugin>
                     <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-jarsigner-plugin</artifactId>
