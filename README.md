@@ -3,6 +3,8 @@ Android OAuth Client Library (android-oauth-client)
 
 ![Feature Image](https://raw.github.com/wuman/android-oauth-client/master/library/src/site/static/feature.png)
 
+![Screenshot](https://raw.github.com/wuman/android-oauth-client/master/library/src/site/static/screenshot.png)
+
 The `android-oauth-client` library helps you to easily add an OAuth flow to
 your existing Android application.  It automatically shows a customizable
 Android dialog with `WebView` to guide the user to eventually grant you an 
