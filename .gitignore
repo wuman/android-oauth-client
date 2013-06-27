@@ -40,7 +40,6 @@ tramp
 *.ipr
 *.iws
 .idea/
-.*
 !.gitignore
 *~
 nbproject/private/
