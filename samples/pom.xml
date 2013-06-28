@@ -144,17 +144,6 @@
                         </executions>
                     </plugin>
                     <plugin>
-                        <groupId>com.jayway.maven.plugins.android.generation2</groupId>
-                        <artifactId>android-maven-plugin</artifactId>
-                        <version>${version.plugin.android-maven}</version>
-                        <inherited>true</inherited>
-                        <configuration>
-                            <sign>
-                                <debug>false</debug>
-                            </sign>
-                        </configuration>
-                    </plugin>
-                    <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-jarsigner-plugin</artifactId>
                         <version>${version.plugin.maven-jarsigner}</version>
@@ -185,6 +174,33 @@
                                 </goals>
                             </execution>
                         </executions>
+                    </plugin>
+                    <plugin>
+                        <groupId>com.jayway.maven.plugins.android.generation2</groupId>
+                        <artifactId>android-maven-plugin</artifactId>
+                        <version>${version.plugin.android-maven}</version>
+                        <inherited>true</inherited>
+                        <executions>
+                            <execution>
+                                <id>zipalign-application-apk</id>
+                                <phase>package</phase>
+                                <goals>
+                                    <goal>zipalign</goal>
+                                </goals>
+                                <configuration>
+                                    <zipalign>
+                                        <verbose>true</verbose>
+                                        <skip>false</skip>
+                                        <outputApk>${project.build.directory}/${project.build.finalName}.${project.packaging}</outputApk>
+                                    </zipalign>
+                                </configuration>
+                            </execution>
+                        </executions>
+                        <configuration>
+                            <sign>
+                                <debug>false</debug>
+                            </sign>
+                        </configuration>
                     </plugin>
                 </plugins>
             </build>

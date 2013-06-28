@@ -100,20 +100,6 @@
                                 </proguard>
                             </configuration>
                         </execution>
-                        <execution>
-                            <id>zipalign-application-apk</id>
-                            <phase>package</phase>
-                            <goals>
-                                <goal>zipalign</goal>
-                            </goals>
-                            <configuration>
-                                <zipalign>
-                                    <verbose>true</verbose>
-                                    <skip>false</skip>
-                                    <outputApk>${project.build.directory}/${project.build.finalName}.${project.packaging}</outputApk>
-                                </zipalign>
-                            </configuration>
-                        </execution>
                     </executions>
                     <configuration>
                         <sdk>
