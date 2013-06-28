@@ -200,6 +200,7 @@
                     <configuration>
                         <arguments>-Dgpg.passphrase=${gpg.passphrase}</arguments>
                         <tagNameFormat>v@{project.version}</tagNameFormat>
+                        <useReleaseProfile>true</useReleaseProfile>
                         <releaseProfiles>release-gpg-sign-artifacts</releaseProfiles>
                         <autoVersionSubmodules>true</autoVersionSubmodules>
                         <preparationGoals>android:manifest-update scm:checkin -Dmessage="prepareRelease"</preparationGoals>
