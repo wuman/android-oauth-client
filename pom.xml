@@ -3,7 +3,7 @@
 
     <groupId>com.wu-man</groupId>
     <artifactId>android-oauth-client-parent</artifactId>
-    <version>0.0.1</version>
+    <version>0.0.2-SNAPSHOT</version>
     <packaging>pom</packaging>
 
     <parent>
@@ -253,7 +253,7 @@
         <url>https://github.com/wuman/android-oauth-client</url>
         <connection>scm:git:git://github.com/wuman/android-oauth-client.git</connection>
         <developerConnection>scm:git:git@github.com:wuman/android-oauth-client.git</developerConnection>
-        <tag>v0.0.1</tag>
+        <tag>HEAD</tag>
     </scm>
 
     <prerequisites>
