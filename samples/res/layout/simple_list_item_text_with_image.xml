@@ -20,6 +20,7 @@
         android:layout_alignParentTop="true"
         android:layout_alignWithParentIfMissing="true"
         android:layout_marginLeft="?android:attr/scrollbarSize"
-        android:layout_toRightOf="@android:id/icon" />
+        android:layout_toRightOf="@android:id/icon"
+        android:fontFamily="sans-serif-condensed" />
 
 </RelativeLayout>
