@@ -174,6 +174,10 @@ make sure you include the following configurations:
       @com.google.api.client.util.Key <fields>;
     }
 
+    -keepclasseswithmembers class * {
+      @com.google.api.client.util.Value <fields>;
+    }
+
     -keepnames class com.google.api.client.http.HttpTransport
 
     # Needed by google-http-client-android when linking against an older platform version
