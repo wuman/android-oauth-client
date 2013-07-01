@@ -47,6 +47,8 @@ class FragmentManagerCompat {
             Object fragment = null;
             if (supportFragmentManager != null) {
                 fragment = supportFragmentManager.findFragmentByTag(tag);
+            } else {
+                fragment = nativeFragmentManager.findFragmentByTag(tag);
             }
             if (fragment == null) {
                 return null;
