@@ -9,9 +9,9 @@ before_install:
   - sudo apt-get install -qq --force-yes git
   - git clone https://github.com/wuman/volley-mvn-install.git
   - ./volley-mvn-install/install.sh
-  - wget -nv http://dl.google.com/android/android-sdk_r22.0.1-linux.tgz
-  - tar zxvf android-sdk_r22.0.1-linux.tgz
+  - wget -nv http://dl.google.com/android/android-sdk_r22.2.1-linux.tgz
+  - tar zxvf android-sdk_r22.2.1-linux.tgz
   - export ANDROID_HOME=${PWD}/android-sdk-linux
-  - export PATH=${PATH}:${ANDROID_HOME}/tools:${ANDROID_HOME}/build-tools/17.0.0/
-  - android list sdk
+  - export PATH=${PATH}:${ANDROID_HOME}/tools:${ANDROID_HOME}/platform-tools:${ANDROID_HOME}/build-tools/17.0.0/
+  - android -v list sdk -a -e
   - echo "y" | android -v update sdk --filter tools,build-tools-17.0.0,android-17 --no-ui --force 
