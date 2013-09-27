@@ -214,6 +214,13 @@ You may also include it as a dependency by including the following coordinates:
 </dependency>
 ```
 
+or using Gradle
+```groovy
+dependencies {
+   compile 'com.wu-man:android-oauth-client:0.0.1'
+}
+```
+
 
 HOW TO BUILD THE PROJECT
 ------------------------
