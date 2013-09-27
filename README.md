@@ -203,8 +203,9 @@ Twitter, etc.
 HOW TO USE THE LIBRARY
 ----------------------
 
-Android OAuth Client is available for download from the Maven Central repository.
-You may also include it as a dependency by including the following coordinates:
+Android OAuth Client is available for download from the [Maven Central](http://bit.ly/15XDPPe)
+repository.  You may also include it as a dependency by including the following 
+coordinates:
 
 ```xml
 <dependency>
@@ -215,6 +216,7 @@ You may also include it as a dependency by including the following coordinates:
 ```
 
 or using Gradle
+
 ```groovy
 dependencies {
    compile 'com.wu-man:android-oauth-client:0.0.2'
