@@ -210,14 +210,14 @@ You may also include it as a dependency by including the following coordinates:
 <dependency>
   <groupId>com.wu-man</groupId>
   <artifactId>android-oauth-client</artifactId>
-  <version>0.0.1</version>
+  <version>0.0.2</version>
 </dependency>
 ```
 
 or using Gradle
 ```groovy
 dependencies {
-   compile 'com.wu-man:android-oauth-client:0.0.1'
+   compile 'com.wu-man:android-oauth-client:0.0.2'
 }
 ```
 
