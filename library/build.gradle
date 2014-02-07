@@ -94,6 +94,10 @@ if (project.hasProperty('SONATYPE_USERNAME') && project.hasProperty('SONATYPE_PA
         repository(url: 'https://oss.sonatype.org/service/local/staging/deploy/maven2/') {
           authentication(userName: SONATYPE_USERNAME, password: SONATYPE_PASSWORD)
         }
+
+        snapshotRepository(url: 'https://oss.sonatype.org/content/repositories/snapshots/') {
+          authentication(userName: SONATYPE_USERNAME, password: SONATYPE_PASSWORD)
+        }
     
         pom.project {
           name 'Android OAuth Client Library'
