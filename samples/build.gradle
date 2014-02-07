@@ -12,9 +12,45 @@ dependencies {
   testCompile 'org.robolectric:robolectric:2.1.+'
 }
 
+def computeVersionCode(versionName) {
+  def parts = versionName.replaceAll('[^-\\d]', '').replaceAll('[-]$', '').split('-', 3)
+  def versionCode = 0.0
+  parts.eachWithIndex() { part, i ->
+    if (i<2) {
+      versionCode += (Math.pow(10, ((1-i) * 4)) * part.toInteger())
+    }
+  }
+  versionCode.toInteger()
+}
+
+def gitSha() {
+  'git rev-parse --short HEAD'.execute().text.trim()
+}
+
+def buildTime() {
+  new Date().format("yyyy-MM-dd'T'HH:mm'Z'", TimeZone.getTimeZone("UTC"))
+}
+
 android {
-  compileSdkVersion 17
-  buildToolsVersion '17.0.0'
+  compileSdkVersion rootProject.ext.compileSdkVersion
+  buildToolsVersion rootProject.ext.buildToolsVersion
+
+  defaultConfig {
+    minSdkVersion 9
+    targetSdkVersion rootProject.ext.compileSdkVersion
+
+    versionName rootProject.ext.versionName
+    versionCode computeVersionCode(rootProject.ext.versionName)
+
+    buildConfigField 'String', 'GIT_SHA', "\"${gitSha()}\""
+    buildConfigField 'String', 'BUILD_TIME', "\"${buildTime()}\""
+  }
+
+  buildTypes {
+    debug {
+      versionNameSuffix '-debug'
+    }
+  }
 
   lintOptions {
     // temporary fix for https://code.google.com/p/android/issues/detail?id=64014

@@ -1,3 +1,26 @@
+def computeVersionName() {
+  def lastGitTag = "git describe --tags HEAD".execute().text
+  def tagMatcher = lastGitTag =~ /^v(.*)/
+  def tag = tagMatcher ? tagMatcher[0][1] : "0.0.1"
+  def snapshotMatcher = tag =~ /^[^-]*-[^-]*-g/
+  if (snapshotMatcher) {
+    "${tag}-SNAPSHOT"
+  } else {
+    tag
+  }
+}
+
+ext {
+  compileSdkVersion = 17
+  buildToolsVersion = '19.0.1'
+
+  versionName = computeVersionName()
+}
+
+task wrapper(type: Wrapper) {
+  gradleVersion = '1.10'
+}
+
 subprojects {
 
   buildscript {
@@ -9,7 +32,7 @@ subprojects {
       }
     }
     dependencies {
-      classpath 'com.android.tools.build:gradle:0.7.+'
+      classpath 'com.android.tools.build:gradle:0.8.+'
       classpath 'com.squareup.gradle:gradle-android-test-plugin:0.9.1-SNAPSHOT'
       classpath 'com.github.dcendents:android-maven-plugin:1.0'
     }
