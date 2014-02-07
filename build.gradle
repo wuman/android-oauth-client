@@ -1,12 +1,16 @@
 def computeVersionName() {
   def lastGitTag = "git describe --tags HEAD".execute().text
   def tagMatcher = lastGitTag =~ /^v(.*)/
-  def tag = tagMatcher ? tagMatcher[0][1] : "0.0.1"
-  def snapshotMatcher = tag =~ /^[^-]*-[^-]*-g/
-  if (!tagMatcher || snapshotMatcher) {
-    "${tag}-SNAPSHOT"
+  if (tagMatcher) {
+    lastGitTag = tagMatcher[0][1]
   } else {
-    tag
+    return "0.0.1-SNAPSHOT"
+  }
+  def snapshotMatcher = lastGitTag =~ /^[^-]*-[^-]*-g/
+  if (snapshotMatcher) {
+    "${lastGitTag}-SNAPSHOT"
+  } else {
+    lastGitTag
   }
 }
 
