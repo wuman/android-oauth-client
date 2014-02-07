@@ -10,6 +10,6 @@ before_install:
   - wget -nv http://dl.google.com/android/android-sdk_r22.2.1-linux.tgz
   - tar zxvf android-sdk_r22.2.1-linux.tgz
   - export ANDROID_HOME=${PWD}/android-sdk-linux
-  - export PATH=${PATH}:${ANDROID_HOME}/tools:${ANDROID_HOME}/platform-tools:${ANDROID_HOME}/build-tools/17.0.0/
+  - export PATH=${PATH}:${ANDROID_HOME}/tools:${ANDROID_HOME}/platform-tools:${ANDROID_HOME}/build-tools/19.0.1/
   - android -v list sdk -a -e
-  - echo "y" | android -v update sdk --filter tools,platform-tools,build-tools-17.0.0,android-17 --no-ui --force --all
+  - echo "y" | android -v update sdk --filter tools,platform-tools,build-tools-19.0.1,android-17 --no-ui --force --all
