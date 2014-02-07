@@ -12,18 +12,17 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
+import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.android.volley.toolbox.NetworkImageView;
 import com.google.api.client.auth.oauth2.ClientParametersAuthentication;
 import com.google.api.client.auth.oauth2.Credential;
 import com.google.api.client.util.Lists;
-import com.google.api.client.util.Preconditions;
+import com.squareup.picasso.Picasso;
 import com.wuman.oauth.samples.AsyncResourceLoader;
 import com.wuman.oauth.samples.AsyncResourceLoader.Result;
 import com.wuman.oauth.samples.OAuth;
 import com.wuman.oauth.samples.R;
-import com.wuman.oauth.samples.SamplesApplication;
 import com.wuman.oauth.samples.SamplesConstants;
 import com.wuman.oauth.samples.flickr.api.Flickr;
 import com.wuman.oauth.samples.flickr.api.FlickrRequestInitializer;
@@ -65,14 +64,11 @@ public class FlickrActivity extends FragmentActivity {
 
     public static class PhotosAdapter extends CompatArrayAdapter<Photo> {
 
-        private final SamplesApplication mApplication;
         private final LayoutInflater mInflater;
 
-        public PhotosAdapter(SamplesApplication application) {
-            super(application.getApplicationContext(), R.layout.simple_list_item_image);
-            mApplication = Preconditions.checkNotNull(application);
-            mInflater = (LayoutInflater) application
-                    .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        public PhotosAdapter(Context context) {
+            super(context, R.layout.simple_list_item_image);
+            mInflater = LayoutInflater.from(context);
         }
 
         public void setData(ContactsPhotos photosContainer, boolean clear) {
@@ -94,8 +90,8 @@ public class FlickrActivity extends FragmentActivity {
                 view = mInflater
                         .inflate(R.layout.simple_list_item_image, parent, false);
                 ViewHolder holder = new ViewHolder(
-                        (NetworkImageView) view.findViewById(android.R.id.icon1),
-                        (NetworkImageView) view.findViewById(android.R.id.icon2),
+                        (ImageView) view.findViewById(android.R.id.icon1),
+                        (ImageView) view.findViewById(android.R.id.icon2),
                         (TextView) view.findViewById(android.R.id.text1));
                 view.setTag(holder);
             } else {
@@ -108,10 +104,10 @@ public class FlickrActivity extends FragmentActivity {
             String imageUrl = FlickrConstants.generateSmallPhotoUrl(photo.getFarm(),
                     photo.getServer(),
                     photo.getId(), photo.getSecret());
-            holder.imageView.setImageUrl(imageUrl, mApplication.getImageLoader());
+            Picasso.with(getContext()).load(imageUrl).into(holder.imageView);
             String avatarUrl = FlickrConstants.generateBuddyIcon(photo.getIconFarm(),
                     photo.getIconServer(), photo.getOwner());
-            holder.avatarView.setImageUrl(avatarUrl, mApplication.getImageLoader());
+            Picasso.with(getContext()).load(avatarUrl).into(holder.avatarView);
             holder.usernameView.setText(photo.getOwnername());
 
             return view;
@@ -119,7 +115,7 @@ public class FlickrActivity extends FragmentActivity {
 
         private static final class ViewHolder {
 
-            ViewHolder(NetworkImageView imageView, NetworkImageView avatarView,
+            ViewHolder(ImageView imageView, ImageView avatarView,
                     TextView usernameView) {
                 super();
                 this.imageView = imageView;
@@ -127,8 +123,8 @@ public class FlickrActivity extends FragmentActivity {
                 this.usernameView = usernameView;
             }
 
-            NetworkImageView imageView;
-            NetworkImageView avatarView;
+            ImageView imageView;
+            ImageView avatarView;
             TextView usernameView;
         }
 
@@ -188,7 +184,7 @@ public class FlickrActivity extends FragmentActivity {
             super.onActivityCreated(savedInstanceState);
             setHasOptionsMenu(true);
 
-            mAdapter = new PhotosAdapter((SamplesApplication) getActivity().getApplication());
+            mAdapter = new PhotosAdapter(getActivity().getApplicationContext());
             mLoadable = new PhotosLoadable(getLoaderManager(), 0,
                     new LoadableDecorator<ContactsPhotos>(this, 0, this));
             setListAdapter(new ContentDecoratorAdapter(mLoadable, mAdapter));

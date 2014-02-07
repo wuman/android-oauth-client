@@ -13,18 +13,17 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
+import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.android.volley.toolbox.NetworkImageView;
 import com.google.api.client.auth.oauth2.ClientParametersAuthentication;
 import com.google.api.client.auth.oauth2.Credential;
 import com.google.api.client.http.HttpStatusCodes;
-import com.google.api.client.util.Preconditions;
+import com.squareup.picasso.Picasso;
 import com.wuman.oauth.samples.AsyncResourceLoader;
 import com.wuman.oauth.samples.AsyncResourceLoader.Result;
 import com.wuman.oauth.samples.OAuth;
 import com.wuman.oauth.samples.R;
-import com.wuman.oauth.samples.SamplesApplication;
 import com.wuman.oauth.samples.SamplesConstants;
 import com.wuman.oauth.samples.instagram.api.Instagram;
 import com.wuman.oauth.samples.instagram.api.Instagram.Users.Self.FeedRequest;
@@ -70,14 +69,11 @@ public class InstagramActivity extends FragmentActivity {
 
     public static class FeedAdapter extends CompatArrayAdapter<FeedItem> {
 
-        private final SamplesApplication mApplication;
         private final LayoutInflater mInflater;
 
-        public FeedAdapter(SamplesApplication application) {
-            super(application.getApplicationContext(), R.layout.simple_list_item_image);
-            mApplication = Preconditions.checkNotNull(application);
-            mInflater = (LayoutInflater) application
-                    .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        public FeedAdapter(Context context) {
+            super(context, R.layout.simple_list_item_image);
+            mInflater = LayoutInflater.from(context);
         }
 
         public void setData(Feed feed, boolean clear) {
@@ -99,8 +95,8 @@ public class InstagramActivity extends FragmentActivity {
                 view = mInflater
                         .inflate(R.layout.simple_list_item_image, parent, false);
                 ViewHolder holder = new ViewHolder(
-                        (NetworkImageView) view.findViewById(android.R.id.icon1),
-                        (NetworkImageView) view.findViewById(android.R.id.icon2),
+                        (ImageView) view.findViewById(android.R.id.icon1),
+                        (ImageView) view.findViewById(android.R.id.icon2),
                         (TextView) view.findViewById(android.R.id.text1));
                 view.setTag(holder);
             } else {
@@ -111,9 +107,9 @@ public class InstagramActivity extends FragmentActivity {
 
             FeedItem item = getItem(position);
             String imageUrl = item.getImages().getThumbnail().getUrl();
-            holder.imageView.setImageUrl(imageUrl, mApplication.getImageLoader());
+            Picasso.with(getContext()).load(imageUrl).into(holder.imageView);
             String avatarUrl = item.getUser().getProfilePicture();
-            holder.avatarView.setImageUrl(avatarUrl, mApplication.getImageLoader());
+            Picasso.with(getContext()).load(avatarUrl).into(holder.avatarView);
             holder.usernameView.setText(item.getUser().getFullName());
 
             return view;
@@ -121,7 +117,7 @@ public class InstagramActivity extends FragmentActivity {
 
         private static final class ViewHolder {
 
-            ViewHolder(NetworkImageView imageView, NetworkImageView avatarView,
+            ViewHolder(ImageView imageView, ImageView avatarView,
                     TextView usernameView) {
                 super();
                 this.imageView = imageView;
@@ -129,8 +125,8 @@ public class InstagramActivity extends FragmentActivity {
                 this.usernameView = usernameView;
             }
 
-            NetworkImageView imageView;
-            NetworkImageView avatarView;
+            ImageView imageView;
+            ImageView avatarView;
             TextView usernameView;
         }
 
@@ -200,7 +196,7 @@ public class InstagramActivity extends FragmentActivity {
             super.onActivityCreated(savedInstanceState);
             setHasOptionsMenu(true);
 
-            mAdapter = new FeedAdapter((SamplesApplication) getActivity().getApplication());
+            mAdapter = new FeedAdapter(getActivity().getApplicationContext());
             mLoadable = new FeedLoadable(getLoaderManager(), 0,
                     new LoadableDecorator<Feed>(this, 0, this));
             setListAdapter(new ContentDecoratorAdapter(mLoadable, mAdapter));

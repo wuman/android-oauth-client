@@ -233,18 +233,6 @@ To build just the `jar` library locally, you may run the following command:
 
     mvn -f library/pom.xml clean package
 
-To build the samples app `apk`, you must first install its dependency
-[volley](https://android.googlesource.com/platform/frameworks/volley/) as a 
-local Maven artifact:
-
-    # install volley locally (in a separate working directory)
-    git clone https://github.com/wuman/volley-mvn-install.git
-    ./volley-mvn-install/install.sh
-
-    # build and install both library jar and samples application apk
-    # (in the android-oauth-client directory)
-    mvn clean install
-
 
 CONTRIBUTE
 ----------

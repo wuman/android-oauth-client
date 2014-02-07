@@ -16,19 +16,18 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.TextView.BufferType;
 
-import com.android.volley.toolbox.NetworkImageView;
 import com.google.api.client.auth.oauth2.ClientParametersAuthentication;
 import com.google.api.client.auth.oauth2.Credential;
 import com.google.api.client.util.Lists;
-import com.google.api.client.util.Preconditions;
+import com.squareup.picasso.Picasso;
 import com.wuman.oauth.samples.AsyncResourceLoader;
 import com.wuman.oauth.samples.AsyncResourceLoader.Result;
 import com.wuman.oauth.samples.OAuth;
 import com.wuman.oauth.samples.R;
-import com.wuman.oauth.samples.SamplesApplication;
 import com.wuman.oauth.samples.SamplesConstants;
 import com.wuman.oauth.samples.twitter.api.Twitter;
 import com.wuman.oauth.samples.twitter.api.Twitter.Statuses.HomeTimelineRequest;
@@ -71,14 +70,11 @@ public class TwitterActivity extends FragmentActivity {
 
     public static class TimelineAdapter extends CompatArrayAdapter<Tweet> {
 
-        private final SamplesApplication mApplication;
         private final LayoutInflater mInflater;
 
-        public TimelineAdapter(SamplesApplication application) {
-            super(application.getApplicationContext(), R.layout.simple_list_item_text_with_image);
-            mApplication = Preconditions.checkNotNull(application);
-            mInflater = (LayoutInflater) application
-                    .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        public TimelineAdapter(Context context) {
+            super(context, R.layout.simple_list_item_text_with_image);
+            mInflater = LayoutInflater.from(context);
         }
 
         public void setData(Timeline timeline, boolean clear) {
@@ -101,7 +97,7 @@ public class TwitterActivity extends FragmentActivity {
                         .inflate(R.layout.simple_list_item_text_with_image, parent, false);
                 ViewHolder holder = new ViewHolder(
                         (TextView) view.findViewById(android.R.id.text1),
-                        (NetworkImageView) view.findViewById(android.R.id.icon));
+                        (ImageView) view.findViewById(android.R.id.icon));
                 view.setTag(holder);
             } else {
                 view = convertView;
@@ -109,7 +105,7 @@ public class TwitterActivity extends FragmentActivity {
 
             ViewHolder holder = (ViewHolder) view.getTag();
             TextView textView = holder.textView;
-            NetworkImageView imageView = holder.imageView;
+            ImageView imageView = holder.imageView;
 
             Tweet tweet = getItem(position);
             String username = tweet.getUser().getName();
@@ -119,21 +115,21 @@ public class TwitterActivity extends FragmentActivity {
                     android.R.style.TextAppearance_Large), 0, username.length(),
                     Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
             textView.setText(builder, BufferType.SPANNABLE);
-            imageView.setImageUrl(tweet.getUser().getProfileImage(), mApplication.getImageLoader());
+            Picasso.with(getContext()).load(tweet.getUser().getProfileImage()).into(imageView);
 
             return view;
         }
 
         private static final class ViewHolder {
 
-            ViewHolder(TextView textView, NetworkImageView imageView) {
+            ViewHolder(TextView textView, ImageView imageView) {
                 super();
                 this.textView = textView;
                 this.imageView = imageView;
             }
 
             TextView textView;
-            NetworkImageView imageView;
+            ImageView imageView;
         }
 
     }
@@ -204,7 +200,7 @@ public class TwitterActivity extends FragmentActivity {
             super.onActivityCreated(savedInstanceState);
             setHasOptionsMenu(true);
 
-            mAdapter = new TimelineAdapter((SamplesApplication) getActivity().getApplication());
+            mAdapter = new TimelineAdapter(getActivity().getApplicationContext());
             mLoadable = new TweetsLoadable(getLoaderManager(), 0,
                     new LoadableDecorator<Timeline>(this, 0, this));
             setListAdapter(new ContentDecoratorAdapter(mLoadable, mAdapter));

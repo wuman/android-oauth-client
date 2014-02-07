@@ -4,7 +4,7 @@
     android:layout_height="wrap_content"
     android:minHeight="?android:attr/listPreferredItemHeight" >
 
-    <com.android.volley.toolbox.NetworkImageView
+    <ImageView
         android:id="@android:id/icon1"
         android:layout_width="match_parent"
         android:layout_height="@dimen/thumbnail_height"
@@ -16,7 +16,7 @@
         android:layout_height="@android:dimen/app_icon_size"
         android:src="@color/translucent_shadow" />
 
-    <com.android.volley.toolbox.NetworkImageView
+    <ImageView
         android:id="@android:id/icon2"
         android:layout_width="@android:dimen/app_icon_size"
         android:layout_height="@android:dimen/app_icon_size"

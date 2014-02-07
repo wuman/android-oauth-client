@@ -15,20 +15,18 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.TextView.BufferType;
 
-import com.android.volley.toolbox.NetworkImageView;
 import com.google.api.client.auth.oauth2.ClientParametersAuthentication;
 import com.google.api.client.auth.oauth2.Credential;
 import com.google.api.client.http.HttpStatusCodes;
 import com.google.api.client.util.Lists;
-import com.google.api.client.util.Preconditions;
 import com.wuman.oauth.samples.AsyncResourceLoader;
 import com.wuman.oauth.samples.AsyncResourceLoader.Result;
 import com.wuman.oauth.samples.OAuth;
 import com.wuman.oauth.samples.R;
-import com.wuman.oauth.samples.SamplesApplication;
 import com.wuman.oauth.samples.SamplesConstants;
 import com.wuman.oauth.samples.github.api.GitHub;
 import com.wuman.oauth.samples.github.api.GitHub.User.ListReposRequest;
@@ -71,14 +69,11 @@ public class GitHubActivity extends FragmentActivity {
 
     public static class RepositoriesAdapter extends CompatArrayAdapter<Repository> {
 
-        private final SamplesApplication mApplication;
         private final LayoutInflater mInflater;
 
-        public RepositoriesAdapter(SamplesApplication application) {
-            super(application.getApplicationContext(), R.layout.simple_list_item_text_with_image);
-            mApplication = Preconditions.checkNotNull(application);
-            mInflater = (LayoutInflater) application
-                    .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        public RepositoriesAdapter(Context context) {
+            super(context, R.layout.simple_list_item_text_with_image);
+            mInflater = LayoutInflater.from(context);
         }
 
         public void setData(Repositories repositories, boolean clear) {
@@ -101,7 +96,7 @@ public class GitHubActivity extends FragmentActivity {
                         .inflate(R.layout.simple_list_item_text_with_image, parent, false);
                 ViewHolder holder = new ViewHolder(
                         (TextView) view.findViewById(android.R.id.text1),
-                        (NetworkImageView) view.findViewById(android.R.id.icon));
+                        (ImageView) view.findViewById(android.R.id.icon));
                 view.setTag(holder);
             } else {
                 view = convertView;
@@ -109,7 +104,7 @@ public class GitHubActivity extends FragmentActivity {
 
             ViewHolder holder = (ViewHolder) view.getTag();
             TextView textView = holder.textView;
-            NetworkImageView imageView = holder.imageView;
+            ImageView imageView = holder.imageView;
 
             Repository repository = getItem(position);
             String repoName = repository.getFullName();
@@ -126,14 +121,14 @@ public class GitHubActivity extends FragmentActivity {
 
         private static final class ViewHolder {
 
-            ViewHolder(TextView textView, NetworkImageView imageView) {
+            ViewHolder(TextView textView, ImageView imageView) {
                 super();
                 this.textView = textView;
                 this.imageView = imageView;
             }
 
             TextView textView;
-            NetworkImageView imageView;
+            ImageView imageView;
         }
 
     }
@@ -208,7 +203,7 @@ public class GitHubActivity extends FragmentActivity {
             super.onActivityCreated(savedInstanceState);
             setHasOptionsMenu(true);
 
-            mAdapter = new RepositoriesAdapter((SamplesApplication) getActivity().getApplication());
+            mAdapter = new RepositoriesAdapter(getActivity().getApplicationContext());
             mLoadable = new RepositoriesLoadable(getLoaderManager(), 0,
                     new LoadableDecorator<Repositories>(this, 0, this));
             setListAdapter(new ContentDecoratorAdapter(mLoadable, mAdapter));
