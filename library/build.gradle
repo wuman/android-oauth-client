@@ -1,0 +1,136 @@
+apply plugin: 'android-library'
+apply plugin: 'android-test'
+apply plugin: 'android-maven'
+apply plugin: 'signing'
+
+dependencies {
+  compile 'com.google.android:support-v4:r7'
+  compile('com.google.api-client:google-api-client-android:1.15.0-rc') {
+    exclude group: 'com.google.android.google-play-services', module: 'google-play-services'
+    exclude group: 'junit', module: 'junit'
+    exclude group: 'com.google.android', module: 'android'
+  }
+  compile 'com.google.oauth-client:google-oauth-client-java6:1.15.0-rc'
+  compile 'com.google.http-client:google-http-client-jackson:1.15.0-rc'
+
+  testCompile 'junit:junit:4.10'
+  testCompile 'org.robolectric:robolectric:2.1.+'
+}
+
+configurations {
+  compile.exclude group: 'org.apache.httpcomponents', module: 'httpclient'
+  compile.exclude group: 'xpp3', module: 'xpp3'
+}
+
+android {
+  compileSdkVersion 17
+  buildToolsVersion '17.0.0'
+
+  lintOptions {
+    // temporary fix for https://code.google.com/p/android/issues/detail?id=64014
+    disable 'InvalidPackage'
+  }
+
+  sourceSets {
+    main {
+      manifest.srcFile 'AndroidManifest.xml'
+      res.srcDirs = ['res']
+    }
+  }
+}
+
+android.libraryVariants.all { variant ->
+  def name = variant.buildType.name
+  if (name.equals(com.android.builder.BuilderConstants.DEBUG)) {
+    // skip debug builds
+    return;
+  }
+  task("javadoc${variant.name.capitalize()}", type: Javadoc) {
+    description "Generates Javadoc for $variant.name."
+    source = variant.javaCompile.source
+    ext.androidJar = "${android.plugin.sdkDirectory}/platforms/${android.compileSdkVersion}/android.jar"
+    classpath = files(variant.javaCompile.classpath.files) + files(ext.androidJar)
+  }
+
+  task("bundleJavadoc${variant.name.capitalize()}", type: Jar) {
+    description "Bundles Javadoc into zip for $variant.name."
+    classifier = "javadoc"
+    from tasks["javadoc${variant.name.capitalize()}"]
+  }
+}
+
+task jar(type: Jar) {
+  from 'build/classes/release'
+}
+
+task sourcesJar(type: Jar) {
+  classifier = 'sources'
+  from android.sourceSets.main.java
+}
+
+task javadocJar(type: Jar, dependsOn: "javadocRelease") {
+  classifier = 'javadoc'
+  from 'build/docs/javadoc'
+}
+
+artifacts {
+  archives jar
+  archives sourcesJar
+  archives javadocJar
+}
+
+if (project.hasProperty('signing.secretKeyRingFile') && project.hasProperty('signing.keyId')) {
+  signing {
+    sign configurations.archives
+  }
+}
+
+if (project.hasProperty('SONATYPE_USERNAME') && project.hasProperty('SONATYPE_PASSWORD')) {
+  uploadArchives {
+    repositories {
+      mavenDeployer {
+        beforeDeployment { MavenDeployment deployment -> signing.signPom(deployment) }
+    
+        repository(url: 'https://oss.sonatype.org/service/local/staging/deploy/maven2/') {
+          authentication(userName: SONATYPE_USERNAME, password: SONATYPE_PASSWORD)
+        }
+    
+        pom.project {
+          name 'Android OAuth Client Library'
+          groupId 'com.wu-man'
+          artifactId 'android-oauth-client'
+          packaging 'jar', 'aar'
+          description 'Android OAuth Client is a library that helps to easily add an OAuth flow to an existing Android application.'
+          url 'http://wuman.github.com/android-oauth-client/'
+          inceptionYear '2013'
+      
+          scm {
+            url 'https://github.com/wuman/android-oauth-client'
+            connection 'scm:git:git://github.com/wuman/android-oauth-client.git'
+            developerConnection 'scm:git:git@github.com:wuman/android-oauth-client.git'
+            tag 'HEAD'
+          }
+      
+          licenses {
+            license {
+              name 'Apache License Version 2.0'
+              url 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+              distribution 'repo'
+            }
+          }
+      
+          developers {
+            developer {
+              id 'wuman'
+              name 'David Wu'
+              url 'http://blog.wu-man.com'
+              email 'david@wu-man.com'
+              timezone '+8'
+            }
+          }
+        }
+      }
+    }
+  }
+}
+

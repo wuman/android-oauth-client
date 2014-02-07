@@ -1,0 +1,47 @@
+apply plugin: 'android'
+apply plugin: 'android-test'
+
+dependencies {
+  compile project(':library')
+  compile('de.keyboardsurfer.android.widget:crouton:1.8.1') {
+    exclude group: 'com.google.android', module: 'support-v4'
+  }
+  compile 'com.squareup.picasso:picasso:2.2.0'
+
+  testCompile 'junit:junit:4.10'
+  testCompile 'org.robolectric:robolectric:2.1.+'
+}
+
+android {
+  compileSdkVersion 17
+  buildToolsVersion '17.0.0'
+
+  lintOptions {
+    // temporary fix for https://code.google.com/p/android/issues/detail?id=64014
+    disable 'InvalidPackage'
+  }
+
+  sourceSets {
+    main {
+      manifest.srcFile 'AndroidManifest.xml'
+      res.srcDirs = ['res']
+    }
+  }
+}
+
+File signFile = rootProject.file('sign.properties')
+if (signFile.exists()) {
+  Properties p = new Properties()
+  p.load(new FileInputStream(signFile))
+  android {
+    signingConfigs {
+      release {
+        storeFile file(p.KEYSTORE)
+        storePassword p.KEYSTORE_PASSWORD
+        keyAlias p.KEY_ALIAS
+        keyPassword p.KEY_PASSWORD
+      }
+    }
+  }
+  android.buildTypes.release.signingConfig android.signingConfigs.release
+}

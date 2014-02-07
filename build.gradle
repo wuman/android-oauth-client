@@ -1,0 +1,27 @@
+subprojects {
+
+  buildscript {
+    repositories {
+      mavenCentral()
+      maven {
+        name 'Sonatype Snapshots'
+        url 'https://oss.sonatype.org/content/repositories/snapshots/'
+      }
+    }
+    dependencies {
+      classpath 'com.android.tools.build:gradle:0.7.+'
+      classpath 'com.squareup.gradle:gradle-android-test-plugin:0.9.1-SNAPSHOT'
+      classpath 'com.github.dcendents:android-maven-plugin:1.0'
+    }
+  }
+
+  repositories {
+    mavenCentral()
+  }
+
+  tasks.withType(Compile) {
+    options.encoding = "UTF-8"
+  }
+
+}
+

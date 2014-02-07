@@ -1,4 +1,5 @@
 language: java
+jdk: oraclejdk7
 
 notifications:
   email: false
@@ -6,9 +7,6 @@ notifications:
 before_install:
   - sudo apt-get update -qq
   - if [ `uname -m` = x86_64 ]; then sudo apt-get install -qq --force-yes libgd2-xpm ia32-libs ia32-libs-multiarch; fi
-  - sudo apt-get install -qq --force-yes git
-  - git clone https://github.com/wuman/volley-mvn-install.git
-  - ./volley-mvn-install/install.sh
   - wget -nv http://dl.google.com/android/android-sdk_r22.2.1-linux.tgz
   - tar zxvf android-sdk_r22.2.1-linux.tgz
   - export ANDROID_HOME=${PWD}/android-sdk-linux

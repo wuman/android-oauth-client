@@ -162,7 +162,13 @@ proguard/
 *.class
 
 # Package Files #
-*.jar
 *.war
 *.ear
 target/
+.gradle
+build/
+
+# signing config
+*.keystore
+gradle.properties
+sign.properties
