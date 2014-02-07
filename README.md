@@ -141,7 +141,7 @@ Use the provided `DialogFragmentController`, which automatically handles most
 of the UI for you via an Android dialog.  The `DialogFragmentController` has
 two constructors, one taking `android.app.FragmentManager` and the other taking
 `android.support.v4.app.FragmentManager` as the sole input parameter.  Depending
-on how instantiate the controller, either `android.app.DialogFragment` or
+on how you instantiate the controller, either `android.app.DialogFragment` or
 `android.support.v4.app.DialogFragment` will be used.
 
     AuthorizationUIController controller = 
