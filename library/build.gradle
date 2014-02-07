@@ -99,7 +99,7 @@ if (project.hasProperty('SONATYPE_USERNAME') && project.hasProperty('SONATYPE_PA
           name 'Android OAuth Client Library'
           groupId 'com.wu-man'
           artifactId 'android-oauth-client'
-          version rootProject.ext.versionName
+          version rootProject.ext.version
           packaging 'jar', 'aar'
           description 'Android OAuth Client is a library that helps to easily add an OAuth flow to an existing Android application.'
           url 'http://wuman.github.com/android-oauth-client/'

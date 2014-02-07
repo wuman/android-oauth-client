@@ -3,10 +3,24 @@ def computeVersionName() {
   def tagMatcher = lastGitTag =~ /^v(.*)/
   def tag = tagMatcher ? tagMatcher[0][1] : "0.0.1"
   def snapshotMatcher = tag =~ /^[^-]*-[^-]*-g/
-  if (snapshotMatcher) {
+  if (!tagMatcher || snapshotMatcher) {
     "${tag}-SNAPSHOT"
   } else {
     tag
+  }
+}
+
+def computeVersion() {
+  def lastVersion = "git describe --tags --abbrev=0".execute().text
+  def matcher = lastVersion =~ /^v(.*)/
+  lastVersion = matcher ? matcher[0][1] : "0.0.0"
+  def parts = lastVersion.split("\\.", 3)
+  def versionName = computeVersionName()
+  if (versionName.endsWith('-SNAPSHOT')) {
+    parts[2] = Integer.toString(parts[2].toInteger() + 1)
+    parts[0] + '.' + parts[1] + '.' + parts[2] + '-SNAPSHOT'
+  } else {
+    lastVersion
   }
 }
 
@@ -15,7 +29,9 @@ ext {
   buildToolsVersion = '19.0.1'
 
   versionName = computeVersionName()
+  version = computeVersion()
   println 'versionName: ' + versionName
+  println 'version: ' + version
 }
 
 task wrapper(type: Wrapper) {
