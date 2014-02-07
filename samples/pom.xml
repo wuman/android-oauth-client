@@ -21,11 +21,6 @@
             <version>${project.version}</version>
         </dependency>
         <dependency>
-            <groupId>com.google.http-client</groupId>
-            <artifactId>google-http-client-jackson</artifactId>
-            <version>1.15.0-rc</version>
-        </dependency>
-        <dependency>
             <groupId>de.keyboardsurfer.android.widget</groupId>
             <artifactId>crouton</artifactId>
             <version>1.8.1</version>
