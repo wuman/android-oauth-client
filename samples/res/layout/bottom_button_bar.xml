@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<view xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/bottom_button_bar"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    class="com.wuman.oauth.samples.ui.BottomButtonBar"
+    android:background="@android:drawable/bottom_bar"
+    android:orientation="horizontal"
+    android:padding="10.0dip"
+    android:visibility="gone" >
+
+    <Button
+        android:id="@+id/btn_left"
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginLeft="5.0dip"
+        android:layout_marginRight="5.0dip"
+        android:layout_weight="0.2"
+        android:singleLine="true" />
+
+    <Button
+        android:id="@+id/btn_middle"
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginLeft="5.0dip"
+        android:layout_marginRight="5.0dip"
+        android:layout_weight="0.2"
+        android:singleLine="true" />
+
+    <Button
+        android:id="@+id/btn_right"
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginLeft="5.0dip"
+        android:layout_marginRight="5.0dip"
+        android:layout_weight="0.2"
+        android:singleLine="true" />
+
+</view>

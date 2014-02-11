@@ -84,6 +84,10 @@
                 <category android:name="com.wuman.oauth.samples.EXAMPLE"/>
             </intent-filter>
         </activity>
+        <activity
+            android:name=".ui.HtmlLicensesActivity"
+            android:excludeFromRecents="true"
+            android:theme="@android:style/Theme.Dialog" />
     </application>
 
 </manifest>

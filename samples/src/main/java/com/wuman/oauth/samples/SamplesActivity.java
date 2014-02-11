@@ -6,9 +6,13 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
+
+import com.wuman.oauth.samples.ui.HtmlLicensesActivity;
 
 import java.text.Collator;
 import java.util.ArrayList;
@@ -33,10 +37,10 @@ public class SamplesActivity extends ListActivity {
         }
 
         setListAdapter(new SimpleAdapter(this, getData(path),
-                android.R.layout.simple_list_item_1, new String[] {
-                        "title"
-                },
-                new int[] {
+                android.R.layout.simple_list_item_1, new String[]{
+                "title"
+        },
+                new int[]{
                         android.R.id.text1
                 }));
         getListView().setTextFilterEnabled(true);
@@ -135,7 +139,7 @@ public class SamplesActivity extends ListActivity {
     }
 
     protected void addItem(List<Map<String, Object>> data, String name,
-            Intent intent) {
+                           Intent intent) {
         Map<String, Object> temp = new HashMap<String, Object>();
         temp.put("title", name);
         temp.put("intent", intent);
@@ -151,4 +155,24 @@ public class SamplesActivity extends ListActivity {
         startActivity(intent);
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        super.onCreateOptionsMenu(menu);
+        getMenuInflater().inflate(R.menu.main_actions_menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.licenses: {
+                Intent intent = new Intent(this, HtmlLicensesActivity.class);
+                startActivity(intent);
+                return true;
+            }
+            default: {
+                return super.onOptionsItemSelected(item);
+            }
+        }
+    }
 }
