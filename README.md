@@ -213,7 +213,7 @@ coordinates:
 <dependency>
   <groupId>com.wu-man</groupId>
   <artifactId>android-oauth-client</artifactId>
-  <version>0.0.2</version>
+  <version>0.0.3</version>
 </dependency>
 ```
 
@@ -221,17 +221,33 @@ or using Gradle
 
 ```groovy
 dependencies {
-   compile 'com.wu-man:android-oauth-client:0.0.2'
+   compile 'com.wu-man:android-oauth-client:0.0.3'
 }
+```
+
+Starting in v0.0.3, we release in the Android library `AAR` format as well.
+The artifact coordinates are:
+
+```xml
+<dependency>
+  <groupId>com.wu-man</groupId>
+  <artifactId>android-oauth-client</artifactId>
+  <version>0.0.3</version>
+  <type>aar</type>
+</dependency>
 ```
 
 
 HOW TO BUILD THE PROJECT
 ------------------------
 
-To build just the `jar` library locally, you may run the following command:
+You should use the included Graddle wrapper to build the project with the
+following command:
 
-    mvn -f library/pom.xml clean package
+    ./gradlew clean build
+
+The resulting jar file is located at `library/build/libs/library.jar` and the
+aar file is located at `library/build/libs/library.aar`.
 
 
 CONTRIBUTE
