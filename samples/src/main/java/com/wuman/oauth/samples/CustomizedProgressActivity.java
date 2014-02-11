@@ -40,11 +40,11 @@ import com.wuman.android.auth.oauth2.store.SharedPreferencesCredentialStore;
 import com.wuman.oauth.samples.AsyncResourceLoader.Result;
 import com.wuman.oauth.samples.foursquare.FoursquareConstants;
 
-import de.keyboardsurfer.android.widget.crouton.Crouton;
-import de.keyboardsurfer.android.widget.crouton.Style;
-
 import java.io.IOException;
 import java.util.logging.Logger;
+
+import de.keyboardsurfer.android.widget.crouton.Crouton;
+import de.keyboardsurfer.android.widget.crouton.Style;
 
 public class CustomizedProgressActivity extends FragmentActivity {
 
@@ -174,9 +174,9 @@ public class CustomizedProgressActivity extends FragmentActivity {
             button.setEnabled(false);
             message.setText("");
             if (id == LOADER_GET_TOKEN) {
-                return new GetTokenLoader(getActivity());
+                return new GetTokenLoader(getActivity(), oauth);
             } else {
-                return new DeleteTokenLoader(getActivity());
+                return new DeleteTokenLoader(getActivity(), oauth);
             }
         }
 
@@ -221,16 +221,19 @@ public class CustomizedProgressActivity extends FragmentActivity {
             button.setTag(action);
         }
 
-        private class GetTokenLoader extends AsyncResourceLoader<Credential> {
+        private static class GetTokenLoader extends AsyncResourceLoader<Credential> {
 
-            public GetTokenLoader(Context context) {
+            private final OAuthManager oauth;
+
+            public GetTokenLoader(Context context, OAuthManager oauth) {
                 super(context);
+                this.oauth = oauth;
             }
 
             @Override
             public Credential loadResourceInBackground() throws Exception {
                 Credential credential =
-                        oauth.authorizeImplicitly(getString(R.string.token_customui), null, null)
+                        oauth.authorizeImplicitly(getContext().getString(R.string.token_customui), null, null)
                                 .getResult();
                 LOGGER.info("token: " + credential.getAccessToken());
                 return credential;
@@ -245,17 +248,20 @@ public class CustomizedProgressActivity extends FragmentActivity {
 
         }
 
-        private class DeleteTokenLoader extends AsyncResourceLoader<Credential> {
+        private static class DeleteTokenLoader extends AsyncResourceLoader<Credential> {
+
+            private final OAuthManager oauth;
 
             private boolean success;
 
-            public DeleteTokenLoader(Context context) {
+            public DeleteTokenLoader(Context context, OAuthManager oauth) {
                 super(context);
+                this.oauth = oauth;
             }
 
             @Override
             public Credential loadResourceInBackground() throws Exception {
-                success = oauth.deleteCredential(getString(R.string.token_customui), null, null)
+                success = oauth.deleteCredential(getContext().getString(R.string.token_customui), null, null)
                         .getResult();
                 LOGGER.info("token deleted: " + success);
                 return null;
