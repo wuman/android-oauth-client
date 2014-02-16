@@ -36,12 +36,12 @@ import com.wuman.oauth.samples.OAuth;
 import com.wuman.oauth.samples.R;
 import com.wuman.oauth.samples.SamplesConstants;
 
-import de.keyboardsurfer.android.widget.crouton.Crouton;
-import de.keyboardsurfer.android.widget.crouton.Style;
-
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.logging.Logger;
+
+import de.keyboardsurfer.android.widget.crouton.Crouton;
+import de.keyboardsurfer.android.widget.crouton.Style;
 
 public class SimpleOAuth2ExplicitActivity extends FragmentActivity {
 
@@ -183,9 +183,9 @@ public class SimpleOAuth2ExplicitActivity extends FragmentActivity {
             button.setEnabled(false);
             message.setText("");
             if (id == LOADER_GET_TOKEN) {
-                return new GetTokenLoader(getActivity());
+                return new GetTokenLoader(getActivity(), oauth);
             } else {
-                return new DeleteTokenLoader(getActivity());
+                return new DeleteTokenLoader(getActivity(), oauth);
             }
         }
 
@@ -230,16 +230,19 @@ public class SimpleOAuth2ExplicitActivity extends FragmentActivity {
             button.setTag(action);
         }
 
-        private class GetTokenLoader extends AsyncResourceLoader<Credential> {
+        private static class GetTokenLoader extends AsyncResourceLoader<Credential> {
 
-            public GetTokenLoader(Context context) {
+            private final OAuthManager oauth;
+
+            public GetTokenLoader(Context context, OAuthManager oauth) {
                 super(context);
+                this.oauth = oauth;
             }
 
             @Override
             public Credential loadResourceInBackground() throws Exception {
                 Credential credential =
-                        oauth.authorizeExplicitly(getString(R.string.token_linkedin_explicit),
+                        oauth.authorizeExplicitly(getContext().getString(R.string.token_linkedin_explicit),
                                 null, null).getResult();
                 LOGGER.info("token: " + credential.getAccessToken());
                 return credential;
@@ -254,17 +257,19 @@ public class SimpleOAuth2ExplicitActivity extends FragmentActivity {
 
         }
 
-        private class DeleteTokenLoader extends AsyncResourceLoader<Credential> {
+        private static class DeleteTokenLoader extends AsyncResourceLoader<Credential> {
 
+            private final OAuthManager oauth;
             private boolean success;
 
-            public DeleteTokenLoader(Context context) {
+            public DeleteTokenLoader(Context context, OAuthManager oauth) {
                 super(context);
+                this.oauth = oauth;
             }
 
             @Override
             public Credential loadResourceInBackground() throws Exception {
-                success = oauth.deleteCredential(getString(R.string.token_linkedin_explicit), null,
+                success = oauth.deleteCredential(getContext().getString(R.string.token_linkedin_explicit), null,
                         null).getResult();
                 LOGGER.info("token deleted: " + success);
                 return null;

@@ -36,12 +36,12 @@ import com.wuman.oauth.samples.OAuth;
 import com.wuman.oauth.samples.R;
 import com.wuman.oauth.samples.SamplesConstants;
 
-import de.keyboardsurfer.android.widget.crouton.Crouton;
-import de.keyboardsurfer.android.widget.crouton.Style;
-
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.logging.Logger;
+
+import de.keyboardsurfer.android.widget.crouton.Crouton;
+import de.keyboardsurfer.android.widget.crouton.Style;
 
 public class SimpleOAuth10aActivity extends FragmentActivity {
 
@@ -184,9 +184,9 @@ public class SimpleOAuth10aActivity extends FragmentActivity {
             button.setEnabled(false);
             message.setText("");
             if (id == LOADER_GET_TOKEN) {
-                return new GetTokenLoader(getActivity());
+                return new GetTokenLoader(getActivity(), oauth10a);
             } else {
-                return new DeleteTokenLoader(getActivity());
+                return new DeleteTokenLoader(getActivity(), oauth10a);
             }
         }
 
@@ -231,16 +231,19 @@ public class SimpleOAuth10aActivity extends FragmentActivity {
             button.setTag(action);
         }
 
-        private class GetTokenLoader extends AsyncResourceLoader<Credential> {
+        private static class GetTokenLoader extends AsyncResourceLoader<Credential> {
 
-            public GetTokenLoader(Context context) {
+            private final OAuthManager oauth10a;
+
+            public GetTokenLoader(Context context, OAuthManager oauth10a) {
                 super(context);
+                this.oauth10a = oauth10a;
             }
 
             @Override
             public Credential loadResourceInBackground() throws Exception {
                 Credential credential =
-                        oauth10a.authorize10a(getString(R.string.token_linkedin_10a), null, null)
+                        oauth10a.authorize10a(getContext().getString(R.string.token_linkedin_10a), null, null)
                                 .getResult();
                 LOGGER.info("token: " + credential.getAccessToken());
                 return credential;
@@ -255,17 +258,19 @@ public class SimpleOAuth10aActivity extends FragmentActivity {
 
         }
 
-        private class DeleteTokenLoader extends AsyncResourceLoader<Credential> {
+        private static class DeleteTokenLoader extends AsyncResourceLoader<Credential> {
 
+            private final OAuthManager oauth10a;
             private boolean success;
 
-            public DeleteTokenLoader(Context context) {
+            public DeleteTokenLoader(Context context, OAuthManager oauth10a) {
                 super(context);
+                this.oauth10a = oauth10a;
             }
 
             @Override
             public Credential loadResourceInBackground() throws Exception {
-                success = oauth10a.deleteCredential(getString(R.string.token_linkedin_10a), null,
+                success = oauth10a.deleteCredential(getContext().getString(R.string.token_linkedin_10a), null,
                         null).getResult();
                 LOGGER.info("token deleted: " + success);
                 return null;
