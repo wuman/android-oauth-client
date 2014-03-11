@@ -33,6 +33,7 @@ import com.wuman.android.auth.oauth.OAuth10aResponseUrl;
 import com.wuman.android.auth.oauth2.implicit.ImplicitResponseUrl;
 
 import java.io.IOException;
+import java.util.Set;
 import java.util.logging.Logger;
 
 class OAuthDialogFragment extends DialogFragmentCompat {
@@ -133,6 +134,52 @@ class OAuthDialogFragment extends DialogFragmentCompat {
         return root;
     }
 
+    static boolean isRedirectUriFound(String uri, String redirectUri) {
+        Uri u = null;
+        Uri r = null;
+        try {
+            u = Uri.parse(uri);
+            r = Uri.parse(redirectUri);
+        } catch (NullPointerException e) {
+            return false;
+        }
+        if (u == null || r == null) {
+            return false;
+        }
+        boolean rOpaque = r.isOpaque();
+        boolean uOpaque = u.isOpaque();
+        if (rOpaque != uOpaque) {
+            return false;
+        }
+        if (rOpaque) {
+            return TextUtils.equals(uri, redirectUri);
+        }
+        if (!TextUtils.equals(r.getScheme(), u.getScheme())) {
+            return false;
+        }
+        if (!TextUtils.equals(r.getAuthority(), u.getAuthority())) {
+            return false;
+        }
+        if (r.getPort() != u.getPort()) {
+            return false;
+        }
+        if (!TextUtils.isEmpty(r.getPath()) && !TextUtils.equals(r.getPath(), u.getPath())) {
+            return false;
+        }
+        Set<String> paramKeys = CompatUri.getQueryParameterNames(r);
+        for (String key : paramKeys) {
+            if (!TextUtils.equals(r.getQueryParameter(key), u.getQueryParameter(key))) {
+                return false;
+            }
+        }
+        String frag = r.getFragment();
+        if (!TextUtils.isEmpty(frag)
+                && !TextUtils.equals(frag, u.getFragment())) {
+            return false;
+        }
+        return true;
+    }
+
     @SuppressLint("SetJavaScriptEnabled")
     @Override
     void onViewCreated(View view, Bundle savedInstanceState) {
@@ -222,11 +269,9 @@ class OAuthDialogFragment extends DialogFragmentCompat {
                 }
 
                 String authorizationType = getArguments().getString(ARG_AUTHORIZATION_TYPE);
-                String baseUrl = Uri.parse(url).buildUpon().query("").fragment("").build()
-                        .toString();
                 LOGGER.info("url: " + url + ", redirect: " + redirectUri + ", callback: "
-                        + TextUtils.equals(baseUrl, redirectUri));
-                if (TextUtils.equals(baseUrl, redirectUri)) {
+                        + isRedirectUriFound(url, redirectUri));
+                if (isRedirectUriFound(url, redirectUri)) {
                     if (TextUtils.equals(authorizationType, AUTHORIZATION_10A)) {
                         OAuth10aResponseUrl responseUrl = new OAuth10aResponseUrl(url);
                         mController.set(responseUrl.getVerifier(), responseUrl.getError(), null,
