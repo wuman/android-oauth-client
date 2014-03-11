@@ -226,7 +226,7 @@ class OAuthDialogFragment extends DialogFragmentCompat {
                         .toString();
                 LOGGER.info("url: " + url + ", redirect: " + redirectUri + ", callback: "
                         + TextUtils.equals(baseUrl, redirectUri));
-                if (TextUtils.equals(baseUrl, redirectUri)) {
+                if (redirectUri.startsWith(baseUrl)) {
                     if (TextUtils.equals(authorizationType, AUTHORIZATION_10A)) {
                         OAuth10aResponseUrl responseUrl = new OAuth10aResponseUrl(url);
                         mController.set(responseUrl.getVerifier(), responseUrl.getError(), null,
