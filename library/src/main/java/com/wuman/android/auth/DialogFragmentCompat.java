@@ -129,6 +129,19 @@ class DialogFragmentCompat extends FragmentCompat {
             mCompat.onCancel(dialog);
         }
 
+        @Override public void onCreate(Bundle savedInstanceState) {
+            super.onCreate(savedInstanceState);
+            setRetainInstance(true);
+        }
+
+        @Override
+        public void onDestroyView() {
+            if (getDialog() != null && getRetainInstance()) {
+                getDialog().setDismissMessage(null);
+            }
+            super.onDestroyView();
+        }
+
     }
 
     public static class SupportDialogFragmentImpl extends android.support.v4.app.DialogFragment
@@ -171,6 +184,19 @@ class DialogFragmentCompat extends FragmentCompat {
         @Override
         public void onCancel(DialogInterface dialog) {
             mCompat.onCancel(dialog);
+        }
+
+        @Override public void onCreate(Bundle savedInstanceState) {
+            super.onCreate(savedInstanceState);
+            setRetainInstance(true);
+        }
+
+        @Override
+        public void onDestroyView() {
+            if (getDialog() != null && getRetainInstance()) {
+                getDialog().setDismissMessage(null);
+            }
+            super.onDestroyView();
         }
 
     }
