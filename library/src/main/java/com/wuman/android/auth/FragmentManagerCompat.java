@@ -32,6 +32,14 @@ class FragmentManagerCompat {
         return supportFragmentManager != null ? supportFragmentManager : nativeFragmentManager;
     }
 
+    boolean isDestroyed() {
+        if (supportFragmentManager != null) {
+            return supportFragmentManager.isDestroyed();
+        } else {
+            return nativeFragmentManager.isDestroyed();
+        }
+    }
+
     @SuppressLint("CommitTransaction")
     FragmentTransactionCompat beginTransaction() {
         if (supportFragmentManager != null) {

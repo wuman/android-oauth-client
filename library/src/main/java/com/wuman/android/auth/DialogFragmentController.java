@@ -133,6 +133,9 @@ public abstract class DialogFragmentController implements AuthorizationDialogCon
         runOnMainThread(new Runnable() {
             @Override
             public void run() {
+                if(fragmentManager.isDestroyed()) {
+                    return;
+                }
                 FragmentTransactionCompat ft = fragmentManager.beginTransaction();
                 FragmentCompat prevDialog =
                         fragmentManager.findFragmentByTag(FragmentCompat.class, FRAGMENT_TAG);
