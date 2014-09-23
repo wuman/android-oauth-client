@@ -9,7 +9,6 @@ import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.util.DisplayMetrics;
 import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -104,8 +103,6 @@ class OAuthDialogFragment extends DialogFragmentCompat {
         }
 
         final Context context = inflater.getContext();
-        DisplayMetrics metrics = context.getResources().getDisplayMetrics();
-        final int DIALOG_HEIGHT = (int) Math.min(0.8f * metrics.heightPixels, 1024);
 
         FrameLayout root = new FrameLayout(context);
         root.setLayoutParams(new LayoutParams(LayoutParams.FILL_PARENT, LayoutParams.FILL_PARENT));
@@ -113,7 +110,7 @@ class OAuthDialogFragment extends DialogFragmentCompat {
         WebView wv = new WebView(context);
         wv.setId(android.R.id.primary);
 
-        root.addView(wv, new LayoutParams(LayoutParams.FILL_PARENT, DIALOG_HEIGHT));
+        root.addView(wv, new LayoutParams(LayoutParams.FILL_PARENT, LayoutParams.FILL_PARENT));
 
         LinearLayout pframe = new LinearLayout(context);
         pframe.setId(android.R.id.progress);
@@ -129,7 +126,7 @@ class OAuthDialogFragment extends DialogFragmentCompat {
         pframe.addView(progressText,
                 new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT));
         root.addView(pframe,
-                new LayoutParams(LayoutParams.FILL_PARENT, DIALOG_HEIGHT));
+                new LayoutParams(LayoutParams.FILL_PARENT, LayoutParams.FILL_PARENT));
 
         return root;
     }
