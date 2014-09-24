@@ -3,12 +3,16 @@ package com.wuman.android.auth;
 
 import android.annotation.TargetApi;
 import android.app.Dialog;
+import android.app.DialogFragment;
 import android.content.DialogInterface;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import static android.os.Build.VERSION.SDK_INT;
+import static android.os.Build.VERSION_CODES.ICE_CREAM_SANDWICH;
 
 @TargetApi(Build.VERSION_CODES.HONEYCOMB)
 class DialogFragmentCompat extends FragmentCompat {
@@ -129,9 +133,15 @@ class DialogFragmentCompat extends FragmentCompat {
             mCompat.onCancel(dialog);
         }
 
+        @TargetApi(ICE_CREAM_SANDWICH)
         @Override public void onCreate(Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
             setRetainInstance(true);
+            if(SDK_INT >= ICE_CREAM_SANDWICH) {
+                setStyle(DialogFragment.STYLE_NORMAL, android.R.style.Theme_Holo_Light_NoActionBar_Fullscreen);
+            } else {
+                setStyle(DialogFragment.STYLE_NORMAL, android.R.style.Theme_Black_NoTitleBar_Fullscreen);
+            }
         }
 
         @Override
@@ -186,9 +196,15 @@ class DialogFragmentCompat extends FragmentCompat {
             mCompat.onCancel(dialog);
         }
 
+        @TargetApi(ICE_CREAM_SANDWICH)
         @Override public void onCreate(Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
             setRetainInstance(true);
+            if(SDK_INT >= ICE_CREAM_SANDWICH) {
+                setStyle(android.support.v4.app.DialogFragment.STYLE_NORMAL, android.R.style.Theme_Holo_Light_NoActionBar_Fullscreen);
+            } else {
+                setStyle(android.support.v4.app.DialogFragment.STYLE_NORMAL, android.R.style.Theme_Black_NoTitleBar_Fullscreen);
+            }
         }
 
         @Override
