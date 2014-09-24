@@ -4,7 +4,7 @@ apply plugin: 'android-maven'
 apply plugin: 'signing'
 
 dependencies {
-  compile 'com.android.support:support-v4:+'
+  compile 'com.android.support:support-v4:20.+'
   compile('com.google.api-client:google-api-client-android:1.15.0-rc') {
     exclude group: 'com.google.android.google-play-services', module: 'google-play-services'
     exclude group: 'junit', module: 'junit'
