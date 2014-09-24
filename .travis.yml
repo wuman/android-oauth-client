@@ -1,5 +1,4 @@
 language: android
-android:
 jdk: oraclejdk7
 
 notifications:
