@@ -1,18 +1,20 @@
 language: android
-jdk: oraclejdk7
-
-notifications:
-  email: false
-
-before_install:
-  - sudo apt-get update -qq
-  - if [ `uname -m` = x86_64 ]; then sudo apt-get install -qq --force-yes libgd2-xpm ia32-libs ia32-libs-multiarch; fi
-  - wget -nv http://dl.google.com/android/android-sdk_r22.2.1-linux.tgz
-  - tar zxvf android-sdk_r22.2.1-linux.tgz
-  - export ANDROID_HOME=${PWD}/android-sdk-linux
-  - export PATH=${PATH}:${ANDROID_HOME}/tools:${ANDROID_HOME}/platform-tools:${ANDROID_HOME}/build-tools/19.0.1/
-  - android -v list sdk -a -e
-  - "android-update-sdk --components='platform-tools,tools' --accept-licenses='.+'"
-  - "android-update-sdk --components='build-tools-19.0.1' --accept-licenses='.+'"
-  - "android-update-sdk --components='android-17' --accept-licenses='.+'"
-  - "android-update-sdk --components='extra-android-m2repository,extra-google-m2repository,extra-android-support' --accept-licenses='.+'"
+android:
+  components:
+    # Uncomment the lines below if you want to
+    # use the latest revision of Android SDK Tools
+     - platform-tools
+     - tools
+    # The BuildTools version used by your project
+     - build-tools-19.0.1
+    #The SDK version used to compile your project
+     - android-17
+     # Additional components
+     - extra-google-google_play_services
+     - extra-google-m2repository
+     - extra-android-m2repository 
+     - addon-google_apis-google-19
+     # Specify at least one system image,
+     # # if you need to run emulator(s) during your tests
+     - sys-img-armeabi-v7a-android-17
+     - sys-img-x86-android-17
