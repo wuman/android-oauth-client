@@ -2,7 +2,9 @@
 package com.wuman.android.auth;
 
 import android.annotation.SuppressLint;
+import android.annotation.TargetApi;
 import android.app.Dialog;
+import android.app.DialogFragment;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.graphics.Bitmap;
@@ -36,6 +38,9 @@ import java.io.IOException;
 import java.util.Set;
 import java.util.logging.Logger;
 
+import static android.os.Build.VERSION.SDK_INT;
+import static android.os.Build.VERSION_CODES.ICE_CREAM_SANDWICH;
+
 class OAuthDialogFragment extends DialogFragmentCompat {
 
     static final Logger LOGGER = Logger.getLogger(OAuthConstants.TAG);
@@ -48,19 +53,23 @@ class OAuthDialogFragment extends DialogFragmentCompat {
     private static final String AUTHORIZATION_IMPLICIT = "implicit";
 
     private AuthorizationDialogController mController;
+    private boolean mFullScreen;
 
-    private OAuthDialogFragment(android.app.DialogFragment fragment) {
+    private OAuthDialogFragment(android.app.DialogFragment fragment, boolean fullScreen) {
         super(fragment);
+        this.mFullScreen = fullScreen;
     }
 
-    private OAuthDialogFragment(android.support.v4.app.DialogFragment fragment) {
+    private OAuthDialogFragment(android.support.v4.app.DialogFragment fragment, boolean fullScreen) {
         super(fragment);
+        this.mFullScreen = fullScreen;
     }
 
     final void setController(AuthorizationDialogController controller) {
         mController = controller;
     }
 
+    @TargetApi(ICE_CREAM_SANDWICH)
     public static final OAuthDialogFragment newInstance(
             GenericUrl authorizationRequestUrl,
             DialogFragmentController controller) {
@@ -77,10 +86,30 @@ class OAuthDialogFragment extends DialogFragmentCompat {
         OAuthDialogFragment frag;
         if (controller.getFragmentManager() instanceof android.support.v4.app.FragmentManager) {
             fragImpl = new SupportDialogFragmentImpl();
-            frag = new OAuthDialogFragment((android.support.v4.app.DialogFragment) fragImpl);
+            frag = new OAuthDialogFragment((android.support.v4.app.DialogFragment) fragImpl, controller.fullScreen);
+            if(controller.fullScreen) {
+                if(SDK_INT >= ICE_CREAM_SANDWICH) {
+                    ((android.support.v4.app.DialogFragment) fragImpl).setStyle(android.support
+                            .v4.app.DialogFragment.STYLE_NORMAL,
+                        android.R.style.Theme_Holo_Light_NoActionBar_Fullscreen);
+                } else {
+                    ((android.support.v4.app.DialogFragment) fragImpl).setStyle(android.support
+                            .v4.app.DialogFragment.STYLE_NORMAL,
+                        android.R.style.Theme_Black_NoTitleBar_Fullscreen);
+                }
+            }
         } else {
             fragImpl = new NativeDialogFragmentImpl();
-            frag = new OAuthDialogFragment((android.app.DialogFragment) fragImpl);
+            frag = new OAuthDialogFragment((android.app.DialogFragment) fragImpl, controller.fullScreen);
+            if(controller.fullScreen) {
+                if(SDK_INT >= ICE_CREAM_SANDWICH) {
+                    ((android.app.DialogFragment) fragImpl).setStyle(DialogFragment.STYLE_NORMAL,
+                        android.R.style.Theme_Holo_Light_NoActionBar_Fullscreen);
+                } else {
+                    ((android.app.DialogFragment) fragImpl).setStyle(DialogFragment.STYLE_NORMAL,
+                        android.R.style.Theme_Black_NoTitleBar_Fullscreen);
+                }
+            }
         }
         fragImpl.setDialogFragmentCompat(frag);
         frag.setArguments(args);
@@ -113,7 +142,11 @@ class OAuthDialogFragment extends DialogFragmentCompat {
         WebView wv = new WebView(context);
         wv.setId(android.R.id.primary);
 
-        root.addView(wv, new LayoutParams(LayoutParams.FILL_PARENT, DIALOG_HEIGHT));
+        if (mFullScreen) {
+            root.addView(wv, new LayoutParams(LayoutParams.FILL_PARENT, LayoutParams.FILL_PARENT));
+        } else {
+            root.addView(wv, new LayoutParams(LayoutParams.FILL_PARENT, DIALOG_HEIGHT));
+        }
 
         LinearLayout pframe = new LinearLayout(context);
         pframe.setId(android.R.id.progress);
@@ -128,8 +161,13 @@ class OAuthDialogFragment extends DialogFragmentCompat {
         progressText.setId(android.R.id.text1);
         pframe.addView(progressText,
                 new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT));
-        root.addView(pframe,
-                new LayoutParams(LayoutParams.FILL_PARENT, DIALOG_HEIGHT));
+        if (mFullScreen) {
+            root.addView(pframe,
+                  new LayoutParams(LayoutParams.FILL_PARENT, LayoutParams.FILL_PARENT));
+        } else {
+            root.addView(pframe,
+                  new LayoutParams(LayoutParams.FILL_PARENT, DIALOG_HEIGHT));
+        }
 
         return root;
     }

@@ -5,5 +5,11 @@
         android:id="@+id/licenses"
         android:icon="@android:drawable/ic_menu_info_details"
         android:title="@string/licenses"/>
+    <group android:checkableBehavior="single">
+        <item android:id="@+id/dialog"
+            android:title="@string/dialog" />
+        <item android:id="@+id/fullscreen"
+            android:title="@string/full_screen"/>
+    </group>
 
 </menu>

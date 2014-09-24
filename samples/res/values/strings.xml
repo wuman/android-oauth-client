@@ -29,5 +29,7 @@
     <string name="token_plurk">plurk</string>
     <string name="token_customui">customui</string>
     <string name="licenses">Open Source Licenses</string>
+    <string name="full_screen">Full screen auth page</string>
+    <string name="dialog">Dialog auth page</string>
 
 </resources>

@@ -35,13 +35,14 @@ import com.wuman.oauth.samples.AsyncResourceLoader;
 import com.wuman.oauth.samples.AsyncResourceLoader.Result;
 import com.wuman.oauth.samples.OAuth;
 import com.wuman.oauth.samples.R;
+import com.wuman.oauth.samples.SamplesActivity;
 import com.wuman.oauth.samples.SamplesConstants;
-
-import de.keyboardsurfer.android.widget.crouton.Crouton;
-import de.keyboardsurfer.android.widget.crouton.Style;
 
 import java.io.IOException;
 import java.util.logging.Logger;
+
+import de.keyboardsurfer.android.widget.crouton.Crouton;
+import de.keyboardsurfer.android.widget.crouton.Style;
 
 public class SimpleOAuth2ExplicitActivity extends FragmentActivity {
 
@@ -142,6 +143,8 @@ public class SimpleOAuth2ExplicitActivity extends FragmentActivity {
         @Override
         public void onActivityCreated(Bundle savedInstanceState) {
             super.onActivityCreated(savedInstanceState);
+            boolean fullScreen = getActivity().getSharedPreferences("Preference", 0)
+                .getBoolean(SamplesActivity.KEY_AUTH_MODE, false);
             // setup credential store
             SharedPreferencesCredentialStore credentialStore =
                     new SharedPreferencesCredentialStore(getActivity(),
@@ -161,7 +164,7 @@ public class SimpleOAuth2ExplicitActivity extends FragmentActivity {
                     .build();
             // setup UI controller
             AuthorizationDialogController controller =
-                    new DialogFragmentController(getFragmentManager()) {
+                    new DialogFragmentController(getFragmentManager(), fullScreen) {
                         @Override
                         public String getRedirectUri() throws IOException {
                             return FoursquareConstants.REDIRECT_URL;
