@@ -12,4 +12,7 @@ before_install:
   - export ANDROID_HOME=${PWD}/android-sdk-linux
   - export PATH=${PATH}:${ANDROID_HOME}/tools:${ANDROID_HOME}/platform-tools:${ANDROID_HOME}/build-tools/19.0.1/
   - android -v list sdk -a -e
-  - echo "y" | android -v update sdk --filter tools,platform-tools,build-tools-19.0.1,android-17,extra-android-support,extra-android-m2repository,extra-google-m2repository --no-ui --force --all --accept-licenses='android-sdk-license-5be876d5|android-sdk-preview-license-52d11cd2'
+  - "android-update-sdk --components='platform-tools,tools' --accept-licenses='.+'"
+  - "android-update-sdk --components='build-tools-19.0.1' --accept-licenses='.+'"
+  - "android-update-sdk --components='android-17' --accept-licenses='.+'"
+  - "android-update-sdk --components='extra-android-m2repository,extra-google-m2repository,extra-android-support' --accept-licenses='.+'"
