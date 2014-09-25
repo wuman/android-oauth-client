@@ -53,6 +53,8 @@ public class OAuth {
             List<String> scopes,
             String temporaryTokenRequestUrl) {
         Preconditions.checkNotNull(client.getClientId());
+        boolean fullScreen = context.getSharedPreferences("Preference", 0)
+            .getBoolean(SamplesActivity.KEY_AUTH_MODE, false);
         // setup credential store
         SharedPreferencesCredentialStore credentialStore =
                 new SharedPreferencesCredentialStore(context,
@@ -75,7 +77,7 @@ public class OAuth {
         AuthorizationFlow flow = flowBuilder.build();
         // setup authorization UI controller
         AuthorizationDialogController controller =
-                new DialogFragmentController(fragmentManager) {
+                new DialogFragmentController(fragmentManager, fullScreen) {
 
                     @Override
                     public String getRedirectUri() throws IOException {

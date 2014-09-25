@@ -35,6 +35,7 @@ import com.wuman.oauth.samples.AsyncResourceLoader;
 import com.wuman.oauth.samples.AsyncResourceLoader.Result;
 import com.wuman.oauth.samples.OAuth;
 import com.wuman.oauth.samples.R;
+import com.wuman.oauth.samples.SamplesActivity;
 import com.wuman.oauth.samples.SamplesConstants;
 
 import java.io.IOException;
@@ -142,6 +143,8 @@ public class SimpleOAuth2ImplicitActivity extends FragmentActivity {
         @Override
         public void onActivityCreated(Bundle savedInstanceState) {
             super.onActivityCreated(savedInstanceState);
+            boolean fullScreen = getActivity().getSharedPreferences("Preference", 0)
+                .getBoolean(SamplesActivity.KEY_AUTH_MODE, false);
             // setup credential store
             SharedPreferencesCredentialStore credentialStore =
                     new SharedPreferencesCredentialStore(getActivity(),
@@ -160,7 +163,7 @@ public class SimpleOAuth2ImplicitActivity extends FragmentActivity {
                     .build();
             // setup UI controller
             AuthorizationDialogController controller =
-                    new DialogFragmentController(getFragmentManager()) {
+                    new DialogFragmentController(getFragmentManager(), fullScreen) {
                         @Override
                         public String getRedirectUri() throws IOException {
                             return FoursquareConstants.REDIRECT_URL;

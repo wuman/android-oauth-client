@@ -3,6 +3,7 @@ package com.wuman.oauth.samples;
 
 import android.app.ListActivity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 import android.os.Bundle;
@@ -24,9 +25,15 @@ import java.util.Map;
 
 public class SamplesActivity extends ListActivity {
 
+    public static final String KEY_AUTH_MODE = "auth_mode";
+
+    private SharedPreferences mPreference;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        mPreference = getSharedPreferences("Preference", 0);
 
         Intent intent = getIntent();
         String path = intent.getStringExtra(getApplicationInfo().packageName
@@ -159,6 +166,15 @@ public class SamplesActivity extends ListActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         super.onCreateOptionsMenu(menu);
         getMenuInflater().inflate(R.menu.main_actions_menu, menu);
+        MenuItem dialog_mode = menu.findItem(R.id.dialog);
+        MenuItem full_screen_mode = menu.findItem(R.id.fullscreen);
+        if (dialog_mode != null && full_screen_mode != null) {
+            if(mPreference.getBoolean(KEY_AUTH_MODE, false)) {
+                full_screen_mode.setChecked(true);
+            } else {
+                dialog_mode.setChecked(true);
+            }
+        }
         return true;
     }
 
@@ -168,6 +184,16 @@ public class SamplesActivity extends ListActivity {
             case R.id.licenses: {
                 Intent intent = new Intent(this, HtmlLicensesActivity.class);
                 startActivity(intent);
+                return true;
+            }
+            case R.id.fullscreen: {
+                item.setChecked(true);
+                mPreference.edit().putBoolean(KEY_AUTH_MODE, true).apply();
+                return true;
+            }
+            case R.id.dialog: {
+                item.setChecked(true);
+                mPreference.edit().putBoolean(KEY_AUTH_MODE, false).apply();
                 return true;
             }
             default: {

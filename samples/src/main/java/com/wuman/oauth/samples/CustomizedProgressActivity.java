@@ -145,6 +145,8 @@ public class CustomizedProgressActivity extends FragmentActivity {
         @Override
         public void onActivityCreated(Bundle savedInstanceState) {
             super.onActivityCreated(savedInstanceState);
+            boolean fullScreen = getActivity().getSharedPreferences("Preference", 0)
+                .getBoolean(SamplesActivity.KEY_AUTH_MODE, false);
             // setup credential store
             SharedPreferencesCredentialStore credentialStore =
                     new SharedPreferencesCredentialStore(getActivity(),
@@ -163,7 +165,7 @@ public class CustomizedProgressActivity extends FragmentActivity {
                     .build();
             // setup UI controller with customized layout
             AuthorizationDialogController controller =
-                    new CustomController(getFragmentManager());
+                    new CustomController(getFragmentManager(), fullScreen);
             // instantiate an OAuthManager instance
             oauth = new OAuthManager(flow, controller);
         }
@@ -279,8 +281,8 @@ public class CustomizedProgressActivity extends FragmentActivity {
 
     private static final class CustomController extends DialogFragmentController {
 
-        public CustomController(FragmentManager fragmentManager) {
-            super(fragmentManager);
+        public CustomController(FragmentManager fragmentManager, boolean fullScreen) {
+            super(fragmentManager, fullScreen);
         }
 
         @Override

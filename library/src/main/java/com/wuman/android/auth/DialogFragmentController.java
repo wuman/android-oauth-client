@@ -30,6 +30,9 @@ public abstract class DialogFragmentController implements AuthorizationDialogCon
 
     private static final String FRAGMENT_TAG = "oauth_dialog";
 
+    /** A boolean to indicate if the dialog fragment needs to be full screen **/
+    public final boolean fullScreen;
+
     private final FragmentManagerCompat fragmentManager;
 
     /** {@link Handler} for running UI in the main thread. */
@@ -56,21 +59,41 @@ public abstract class DialogFragmentController implements AuthorizationDialogCon
     /**
      * @param fragmentManager
      */
-    public DialogFragmentController(android.app.FragmentManager fragmentManager) {
-        super();
-        this.uiHandler = new Handler(Looper.getMainLooper());
-        this.fragmentManager =
-                new FragmentManagerCompat(Preconditions.checkNotNull(fragmentManager));
+    public DialogFragmentController(android.support.v4.app.FragmentManager fragmentManager) {
+        this(fragmentManager, false);
     }
 
     /**
      * @param fragmentManager
      */
-    public DialogFragmentController(android.support.v4.app.FragmentManager fragmentManager) {
+    public DialogFragmentController(android.app.FragmentManager fragmentManager) {
+        this(fragmentManager, false);
+    }
+
+    /**
+     *
+     * @param fragmentManager
+     * @param fullScreen
+     */
+    public DialogFragmentController(android.support.v4.app.FragmentManager fragmentManager, boolean fullScreen) {
         super();
         this.uiHandler = new Handler(Looper.getMainLooper());
         this.fragmentManager =
                 new FragmentManagerCompat(Preconditions.checkNotNull(fragmentManager));
+        this.fullScreen = fullScreen;
+    }
+
+    /**
+     *
+     * @param fragmentManager
+     * @param fullScreen
+     */
+    public DialogFragmentController(android.app.FragmentManager fragmentManager, boolean fullScreen) {
+        super();
+        this.uiHandler = new Handler(Looper.getMainLooper());
+        this.fragmentManager =
+                new FragmentManagerCompat(Preconditions.checkNotNull(fragmentManager));
+        this.fullScreen = fullScreen;
     }
 
     Object getFragmentManager() {
@@ -79,7 +102,7 @@ public abstract class DialogFragmentController implements AuthorizationDialogCon
 
     /**
      * Executes the {@link Runnable} on the main thread.
-     * 
+     *
      * @param runnable
      */
     private void runOnMainThread(Runnable runnable) {
