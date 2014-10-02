@@ -33,6 +33,9 @@ public abstract class DialogFragmentController implements AuthorizationDialogCon
     /** A boolean to indicate if the dialog fragment needs to be full screen **/
     public final boolean fullScreen;
 
+    /** A boolean to indicate if the dialog fragment needs to be horizontal **/
+    public final boolean horizontalProgress;
+
     private final FragmentManagerCompat fragmentManager;
 
     /** {@link Handler} for running UI in the main thread. */
@@ -76,11 +79,7 @@ public abstract class DialogFragmentController implements AuthorizationDialogCon
      * @param fullScreen
      */
     public DialogFragmentController(android.support.v4.app.FragmentManager fragmentManager, boolean fullScreen) {
-        super();
-        this.uiHandler = new Handler(Looper.getMainLooper());
-        this.fragmentManager =
-                new FragmentManagerCompat(Preconditions.checkNotNull(fragmentManager));
-        this.fullScreen = fullScreen;
+        this(fragmentManager, fullScreen, false);
     }
 
     /**
@@ -89,11 +88,37 @@ public abstract class DialogFragmentController implements AuthorizationDialogCon
      * @param fullScreen
      */
     public DialogFragmentController(android.app.FragmentManager fragmentManager, boolean fullScreen) {
+        this(fragmentManager, fullScreen, false);
+    }
+
+    /**
+     *
+     * @param fragmentManager
+     * @param fullScreen
+     */
+    public DialogFragmentController(android.support.v4.app.FragmentManager fragmentManager, boolean fullScreen,
+        boolean horizontalProgress) {
         super();
         this.uiHandler = new Handler(Looper.getMainLooper());
         this.fragmentManager =
                 new FragmentManagerCompat(Preconditions.checkNotNull(fragmentManager));
         this.fullScreen = fullScreen;
+        this.horizontalProgress = horizontalProgress;
+    }
+
+    /**
+     *
+     * @param fragmentManager
+     * @param fullScreen
+     */
+    public DialogFragmentController(android.app.FragmentManager fragmentManager, boolean fullScreen,
+        boolean horizontalProgress) {
+        super();
+        this.uiHandler = new Handler(Looper.getMainLooper());
+        this.fragmentManager =
+                new FragmentManagerCompat(Preconditions.checkNotNull(fragmentManager));
+        this.fullScreen = fullScreen;
+        this.horizontalProgress = horizontalProgress;
     }
 
     Object getFragmentManager() {
