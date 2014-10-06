@@ -72,6 +72,14 @@ class DialogFragmentCompat extends FragmentCompat {
         }
     }
 
+    final Dialog getDialog() {
+        if (supportDialogFragment != null) {
+           return supportDialogFragment.getDialog();
+        } else {
+           return nativeDialogFragment.getDialog();
+        }
+    }
+
     Dialog onCreateDialog(Bundle savedInstanceState) {
         if (supportDialogFragment != null) {
             return new Dialog(supportDialogFragment.getActivity(), supportDialogFragment.getTheme());
