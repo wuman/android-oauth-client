@@ -36,6 +36,8 @@ public abstract class DialogFragmentController implements AuthorizationDialogCon
     /** A boolean to indicate if the dialog fragment needs to be horizontal **/
     public final boolean horizontalProgress;
 
+    public final boolean hideFullScreenTitle;
+
     private final FragmentManagerCompat fragmentManager;
 
     /** {@link Handler} for running UI in the main thread. */
@@ -95,30 +97,58 @@ public abstract class DialogFragmentController implements AuthorizationDialogCon
      *
      * @param fragmentManager
      * @param fullScreen
+     * @param horizontalProgress
      */
     public DialogFragmentController(android.support.v4.app.FragmentManager fragmentManager, boolean fullScreen,
         boolean horizontalProgress) {
-        super();
-        this.uiHandler = new Handler(Looper.getMainLooper());
-        this.fragmentManager =
-                new FragmentManagerCompat(Preconditions.checkNotNull(fragmentManager));
-        this.fullScreen = fullScreen;
-        this.horizontalProgress = horizontalProgress;
+        this(fragmentManager, fullScreen, horizontalProgress, false);
     }
 
     /**
      *
      * @param fragmentManager
      * @param fullScreen
+     * @param horizontalProgress
      */
     public DialogFragmentController(android.app.FragmentManager fragmentManager, boolean fullScreen,
         boolean horizontalProgress) {
+        this(fragmentManager, fullScreen, horizontalProgress, false);
+    }
+
+    /**
+     *
+     * @param fragmentManager
+     * @param fullScreen
+     * @param horizontalProgress
+     * @param hideFullScreenTitle if you set this flag to true, {@param horizontalProgress} will be ignored
+     */
+    public DialogFragmentController(android.support.v4.app.FragmentManager fragmentManager, boolean fullScreen,
+        boolean horizontalProgress, boolean hideFullScreenTitle) {
         super();
         this.uiHandler = new Handler(Looper.getMainLooper());
         this.fragmentManager =
                 new FragmentManagerCompat(Preconditions.checkNotNull(fragmentManager));
         this.fullScreen = fullScreen;
         this.horizontalProgress = horizontalProgress;
+        this.hideFullScreenTitle = hideFullScreenTitle;
+    }
+
+    /**
+     *
+     * @param fragmentManager
+     * @param fullScreen
+     * @param horizontalProgress
+     * @param hideFullScreenTitle if you set this flag to true, {@param horizontalProgress} will be ignored
+     */
+    public DialogFragmentController(android.app.FragmentManager fragmentManager, boolean fullScreen,
+        boolean horizontalProgress, boolean hideFullScreenTitle) {
+        super();
+        this.uiHandler = new Handler(Looper.getMainLooper());
+        this.fragmentManager =
+                new FragmentManagerCompat(Preconditions.checkNotNull(fragmentManager));
+        this.fullScreen = fullScreen;
+        this.horizontalProgress = horizontalProgress;
+        this.hideFullScreenTitle = hideFullScreenTitle;
     }
 
     Object getFragmentManager() {
