@@ -320,7 +320,7 @@ public class AuthorizationFlow extends AuthorizationCodeFlow {
             throws IOException {
         Credential credential = newCredential(userId)
                 .setAccessToken(implicitResponse.getAccessToken())
-                .setExpirationTimeMilliseconds(implicitResponse.getExpiresInSeconds());
+                .setExpiresInSeconds(implicitResponse.getExpiresInSeconds());
         CredentialStore credentialStore = getCredentialStore();
         if (credentialStore != null) {
             credentialStore.store(userId, credential);
