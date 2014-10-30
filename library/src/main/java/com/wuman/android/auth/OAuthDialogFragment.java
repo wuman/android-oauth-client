@@ -407,7 +407,9 @@ class OAuthDialogFragment extends DialogFragmentCompat {
     }
 
     private void onError(String errorMessage) {
-        mController.set(null, errorMessage, null, true);
+        if (mController != null) {
+            mController.set(null, errorMessage, null, true);
+        }
     }
 
     private void setProgressShown(String url, View view, int newProgress) {
