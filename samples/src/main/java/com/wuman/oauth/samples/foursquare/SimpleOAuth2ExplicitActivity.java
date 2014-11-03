@@ -174,6 +174,17 @@ public class SimpleOAuth2ExplicitActivity extends FragmentActivity {
                         public boolean isJavascriptEnabledForWebView() {
                             return true;
                         }
+
+                        @Override
+                        public boolean disableWebViewCache() {
+                            return false;
+                        }
+
+                        @Override
+                        public boolean removePreviousCookie() {
+                            return false;
+                        }
+
                     };
             // instantiate an OAuthManager instance
             oauth = new OAuthManager(flow, controller);

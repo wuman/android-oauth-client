@@ -89,6 +89,16 @@ public class OAuth {
                         return true;
                     }
 
+                    @Override
+                    public boolean disableWebViewCache() {
+                        return false;
+                    }
+
+                    @Override
+                    public boolean removePreviousCookie() {
+                        return false;
+                    }
+
                 };
         return new OAuth(flow, controller);
     }

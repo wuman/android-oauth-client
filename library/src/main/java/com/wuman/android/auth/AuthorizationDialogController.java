@@ -76,4 +76,21 @@ public interface AuthorizationDialogController extends AuthorizationUIController
      *         bypassed, {@code false} otherwise.
      */
     boolean setProgressShown(String url, View view, int progress);
+
+    /**
+     * Indicate whether cache should be enabled for the WebView.
+     *
+     * @return {@code true} if cache should be enabled, {@code false}
+     *         otherwise.
+     */
+    boolean disableWebViewCache();
+
+    /**
+     * Indicate whether cookie should be removed before showing the WebView.
+     *
+     * @return {@code true} if cookie should be removed, {@code false}
+     *         otherwise.
+     */
+    boolean removePreviousCookie();
+
 }
