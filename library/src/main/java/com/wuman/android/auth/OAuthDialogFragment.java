@@ -18,6 +18,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewGroup.LayoutParams;
+import android.webkit.CookieManager;
 import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
@@ -283,6 +284,16 @@ class OAuthDialogFragment extends DialogFragmentCompat {
 
         if (mController.isJavascriptEnabledForWebView()) {
             webSettings.setJavaScriptEnabled(true);
+        }
+
+        if (mController.disableWebViewCache()) {
+            webSettings.setAppCacheEnabled(false);
+            webSettings.setCacheMode(WebSettings.LOAD_NO_CACHE);
+        }
+
+        if (mController.removePreviousCookie()) {
+            CookieManager cookieManager = CookieManager.getInstance();
+            cookieManager.removeAllCookie();
         }
 
         wv.setWebChromeClient(new WebChromeClient() {

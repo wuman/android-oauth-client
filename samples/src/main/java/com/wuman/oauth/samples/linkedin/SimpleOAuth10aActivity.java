@@ -176,6 +176,17 @@ public class SimpleOAuth10aActivity extends FragmentActivity {
                         public boolean isJavascriptEnabledForWebView() {
                             return true;
                         }
+
+                        @Override
+                        public boolean disableWebViewCache() {
+                            return false;
+                        }
+
+                        @Override
+                        public boolean removePreviousCookie() {
+                            return false;
+                        }
+
                     };
             // instantiate an OAuthManager instance
             oauth10a = new OAuthManager(flow, controller);

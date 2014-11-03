@@ -341,6 +341,16 @@ public class CustomizedProgressActivity extends FragmentActivity {
             return true;
         }
 
+        @Override
+        public boolean disableWebViewCache() {
+            return false;
+        }
+
+        @Override
+        public boolean removePreviousCookie() {
+            return false;
+        }
+
     }
 
 }
