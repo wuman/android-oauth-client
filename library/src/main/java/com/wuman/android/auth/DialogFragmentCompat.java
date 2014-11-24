@@ -107,34 +107,50 @@ class DialogFragmentCompat extends FragmentCompat {
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                 Bundle savedInstanceState) {
+            if (mCompat == null) {
+                return null;
+            }
             return mCompat.onCreateView(inflater, container, savedInstanceState);
         }
 
         @Override
         public void onViewCreated(View view, Bundle savedInstanceState) {
+            if (mCompat == null) {
+                return;
+            }
             mCompat.onViewCreated(view, savedInstanceState);
         }
 
         @Override
         public void onActivityCreated(Bundle savedInstanceState) {
             super.onActivityCreated(savedInstanceState);
+            if (mCompat == null) {
+                return;
+            }
             mCompat.onActivityCreated(savedInstanceState);
         }
 
         @Override
         public void onDestroy() {
-            mCompat.onDestroy();
+            if (mCompat != null) {
+                mCompat.onDestroy();
+            }
             super.onDestroy();
         }
 
         @Override
         public Dialog onCreateDialog(Bundle savedInstanceState) {
+            if (mCompat == null) {
+                return null;
+            }
             return mCompat.onCreateDialog(savedInstanceState);
         }
 
         @Override
         public void onCancel(DialogInterface dialog) {
-            mCompat.onCancel(dialog);
+            if (mCompat != null) {
+                mCompat.onCancel(dialog);
+            }
         }
 
         @Override public void onCreate(Bundle savedInstanceState) {
@@ -164,34 +180,50 @@ class DialogFragmentCompat extends FragmentCompat {
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                 Bundle savedInstanceState) {
+            if (mCompat == null) {
+                return null;
+            }
             return mCompat.onCreateView(inflater, container, savedInstanceState);
         }
 
         @Override
         public void onViewCreated(View view, Bundle savedInstanceState) {
+            if (mCompat == null) {
+                return;
+            }
             mCompat.onViewCreated(view, savedInstanceState);
         }
 
         @Override
         public void onActivityCreated(Bundle savedInstanceState) {
             super.onActivityCreated(savedInstanceState);
+            if (mCompat == null) {
+                return;
+            }
             mCompat.onActivityCreated(savedInstanceState);
         }
 
         @Override
         public void onDestroy() {
-            mCompat.onDestroy();
+            if (mCompat != null) {
+                mCompat.onDestroy();
+            }
             super.onDestroy();
         }
 
         @Override
         public Dialog onCreateDialog(Bundle savedInstanceState) {
+            if (mCompat == null) {
+                return null;
+            }
             return mCompat.onCreateDialog(savedInstanceState);
         }
 
         @Override
         public void onCancel(DialogInterface dialog) {
-            mCompat.onCancel(dialog);
+            if (mCompat != null) {
+                mCompat.onCancel(dialog);
+            }
         }
 
         @Override public void onCreate(Bundle savedInstanceState) {
