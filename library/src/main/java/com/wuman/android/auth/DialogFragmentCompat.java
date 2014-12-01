@@ -123,6 +123,9 @@ class DialogFragmentCompat extends FragmentCompat {
 
         @Override
         public void onActivityCreated(Bundle savedInstanceState) {
+        	if (getDialog() == null ) {
+                setShowsDialog(false);
+            }
             super.onActivityCreated(savedInstanceState);
             if (mCompat == null) {
                 return;
@@ -196,6 +199,9 @@ class DialogFragmentCompat extends FragmentCompat {
 
         @Override
         public void onActivityCreated(Bundle savedInstanceState) {
+        	if (getDialog() == null ) {
+                setShowsDialog(false);
+            }
             super.onActivityCreated(savedInstanceState);
             if (mCompat == null) {
                 return;
