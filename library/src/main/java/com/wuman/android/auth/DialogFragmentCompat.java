@@ -72,6 +72,14 @@ class DialogFragmentCompat extends FragmentCompat {
         }
     }
 
+    final void dismissAllowingStateLoss() {
+        if (supportDialogFragment != null) {
+            supportDialogFragment.dismissAllowingStateLoss();
+        } else {
+            nativeDialogFragment.dismissAllowingStateLoss();
+        }
+    }
+
     final Dialog getDialog() {
         if (supportDialogFragment != null) {
            return supportDialogFragment.getDialog();

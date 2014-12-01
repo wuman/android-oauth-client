@@ -170,7 +170,7 @@ public abstract class DialogFragmentController implements AuthorizationDialogCon
                 DialogFragmentCompat frag = fragmentManager
                         .findFragmentByTag(DialogFragmentCompat.class, FRAGMENT_TAG);
                 if (frag != null) {
-                    frag.dismiss();
+                    frag.dismissAllowingStateLoss();
                 }
             }
         });
