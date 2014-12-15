@@ -224,7 +224,7 @@ public abstract class DialogFragmentController implements AuthorizationDialogCon
                         OAuthDialogFragment.newInstance(
                                 authorizationRequestUrl,
                                 DialogFragmentController.this);
-                frag.show(ft, FRAGMENT_TAG);
+                frag.showAllowingStateLoss(ft, FRAGMENT_TAG);
             }
         });
     }

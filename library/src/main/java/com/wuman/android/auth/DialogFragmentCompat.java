@@ -64,6 +64,20 @@ class DialogFragmentCompat extends FragmentCompat {
         }
     }
 
+    final void showAllowingStateLoss(FragmentTransactionCompat transaction, String tag) {
+        if (supportDialogFragment != null) {
+            ((android.support.v4.app.FragmentTransaction) transaction.getFragmentTransaction())
+                .add(supportDialogFragment, tag);
+            ((android.support.v4.app.FragmentTransaction) transaction.getFragmentTransaction())
+                .commitAllowingStateLoss();
+        } else {
+            ((android.app.FragmentTransaction) transaction.getFragmentTransaction())
+                .add(nativeDialogFragment, tag);
+             ((android.app.FragmentTransaction) transaction.getFragmentTransaction())
+                .commitAllowingStateLoss();
+        }
+    }
+
     final void dismiss() {
         if (supportDialogFragment != null) {
             supportDialogFragment.dismiss();
