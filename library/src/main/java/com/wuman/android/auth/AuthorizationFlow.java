@@ -221,12 +221,12 @@ public class AuthorizationFlow extends AuthorizationCodeFlow {
         return new LenientAuthorizationCodeTokenRequest(getTransport(), getJsonFactory(),
                 new GenericUrl(getTokenServerEncodedUrl()), authorizationCode)
                 .setClientAuthentication(getClientAuthentication())
-                .setRequestInitializer(getRequestInitializer())
                 .setScopes(getScopes())
                 .setRequestInitializer(
                         new HttpRequestInitializer() {
                             @Override
                             public void initialize(HttpRequest request) throws IOException {
+                                getRequestInitializer().initialize(request);
                                 request.getHeaders().setAccept("application/json");
                             }
                         });
