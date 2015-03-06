@@ -1,16 +1,4 @@
 apply plugin: 'android'
-apply plugin: 'android-test'
-
-dependencies {
-  compile project(':library')
-  compile('de.keyboardsurfer.android.widget:crouton:1.8.1') {
-    exclude group: 'com.google.android', module: 'support-v4'
-  }
-  compile 'com.squareup.picasso:picasso:2.2.0'
-
-  testCompile 'junit:junit:4.10'
-  testCompile 'org.robolectric:robolectric:2.1.+'
-}
 
 def computeVersionCode(versionName) {
   def parts = versionName.replaceAll('[^-\\d]', '').replaceAll('[-]$', '').split('-', 3)
@@ -63,6 +51,19 @@ android {
       res.srcDirs = ['res']
     }
   }
+}
+
+apply plugin: "android-unit-test"
+
+dependencies {
+    compile project(':library')
+    compile('de.keyboardsurfer.android.widget:crouton:1.8.1') {
+        exclude group: 'com.google.android', module: 'support-v4'
+    }
+    compile 'com.squareup.picasso:picasso:2.2.0'
+
+    testCompile 'junit:junit:4.10'
+    testCompile 'org.robolectric:robolectric:2.1.+'
 }
 
 File signFile = rootProject.file('sign.properties')

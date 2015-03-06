@@ -30,7 +30,7 @@ def computeVersion() {
 
 ext {
   compileSdkVersion = 17
-  buildToolsVersion = '19.0.1'
+  buildToolsVersion = '21.1.2'
 
   versionName = computeVersionName()
   version = computeVersion()
@@ -53,8 +53,8 @@ subprojects {
       }
     }
     dependencies {
-      classpath 'com.android.tools.build:gradle:0.8.+'
-      classpath 'com.squareup.gradle:gradle-android-test-plugin:0.9.1-SNAPSHOT'
+      classpath 'com.android.tools.build:gradle:1.0.1'
+      classpath 'com.github.jcandksolutions.gradle:android-unit-test:2.1.1'
       classpath 'com.github.dcendents:android-maven-plugin:1.0'
     }
   }
@@ -63,7 +63,7 @@ subprojects {
     mavenCentral()
   }
 
-  tasks.withType(Compile) {
+  tasks.withType(JavaCompile) {
     options.encoding = "UTF-8"
   }
 
