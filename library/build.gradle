@@ -1,21 +1,5 @@
-apply plugin: 'android-library'
-apply plugin: 'android-test'
-apply plugin: 'android-maven'
+apply plugin: 'com.android.library'
 apply plugin: 'signing'
-
-dependencies {
-  compile 'com.android.support:support-v4:19.1.0'
-  compile('com.google.api-client:google-api-client-android:1.15.0-rc') {
-    exclude group: 'com.google.android.google-play-services', module: 'google-play-services'
-    exclude group: 'junit', module: 'junit'
-    exclude group: 'com.google.android', module: 'android'
-  }
-  compile 'com.google.oauth-client:google-oauth-client-java6:1.15.0-rc'
-  compile 'com.google.http-client:google-http-client-jackson:1.15.0-rc'
-
-  testCompile 'junit:junit:4.10'
-  testCompile 'org.robolectric:robolectric:2.1.+'
-}
 
 configurations {
   compile.exclude group: 'org.apache.httpcomponents', module: 'httpclient'
@@ -39,16 +23,34 @@ android {
   }
 }
 
+apply plugin: "android-unit-test"
+
+dependencies {
+    compile 'com.android.support:support-v4:19.1.0'
+    compile('com.google.api-client:google-api-client-android:1.15.0-rc') {
+        exclude group: 'com.google.android.google-play-services', module: 'google-play-services'
+        exclude group: 'junit', module: 'junit'
+        exclude group: 'com.google.android', module: 'android'
+    }
+    compile 'com.google.oauth-client:google-oauth-client-java6:1.15.0-rc'
+    compile 'com.google.http-client:google-http-client-jackson:1.15.0-rc'
+
+    testCompile 'junit:junit:4.11'
+    testCompile('org.robolectric:robolectric:2.4') {
+        exclude module: 'support-v4'
+    }
+}
+
 android.libraryVariants.all { variant ->
   def name = variant.buildType.name
-  if (name.equals(com.android.builder.BuilderConstants.DEBUG)) {
+  if (name.equals(com.android.builder.core.BuilderConstants.DEBUG)) {
     // skip debug builds
     return;
   }
   task("javadoc${variant.name.capitalize()}", type: Javadoc) {
     description "Generates Javadoc for $variant.name."
     source = variant.javaCompile.source
-    ext.androidJar = "${android.plugin.sdkDirectory}/platforms/${android.compileSdkVersion}/android.jar"
+    ext.androidJar = "${android.sdkDirectory}/platforms/${android.compileSdkVersion}/android.jar"
     classpath = files(variant.javaCompile.classpath.files) + files(ext.androidJar)
   }
 
@@ -65,7 +67,7 @@ task jar(type: Jar) {
 
 task sourcesJar(type: Jar) {
   classifier = 'sources'
-  from android.sourceSets.main.java
+  from android.sourceSets.main.java.srcDirs
 }
 
 task javadocJar(type: Jar, dependsOn: "javadocRelease") {
@@ -90,7 +92,7 @@ if (project.hasProperty('SONATYPE_USERNAME') && project.hasProperty('SONATYPE_PA
     repositories {
       mavenDeployer {
         beforeDeployment { MavenDeployment deployment -> signing.signPom(deployment) }
-    
+
         repository(url: 'https://oss.sonatype.org/service/local/staging/deploy/maven2/') {
           authentication(userName: SONATYPE_USERNAME, password: SONATYPE_PASSWORD)
         }
@@ -98,7 +100,7 @@ if (project.hasProperty('SONATYPE_USERNAME') && project.hasProperty('SONATYPE_PA
         snapshotRepository(url: 'https://oss.sonatype.org/content/repositories/snapshots/') {
           authentication(userName: SONATYPE_USERNAME, password: SONATYPE_PASSWORD)
         }
-    
+
         pom.project {
           name 'Android OAuth Client Library'
           groupId 'com.wu-man'
@@ -108,13 +110,13 @@ if (project.hasProperty('SONATYPE_USERNAME') && project.hasProperty('SONATYPE_PA
           description 'Android OAuth Client is a library that helps to easily add an OAuth flow to an existing Android application.'
           url 'http://wuman.github.com/android-oauth-client/'
           inceptionYear '2013'
-      
+
           scm {
             url 'https://github.com/wuman/android-oauth-client'
             connection 'scm:git:git://github.com/wuman/android-oauth-client.git'
             developerConnection 'scm:git:git@github.com:wuman/android-oauth-client.git'
           }
-      
+
           licenses {
             license {
               name 'Apache License Version 2.0'
@@ -122,7 +124,7 @@ if (project.hasProperty('SONATYPE_USERNAME') && project.hasProperty('SONATYPE_PA
               distribution 'repo'
             }
           }
-      
+
           developers {
             developer {
               id 'wuman'
