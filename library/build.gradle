@@ -63,7 +63,7 @@ android.libraryVariants.all { variant ->
 }
 
 task jar(type: Jar) {
-  from 'build/classes/release'
+  from 'build/intermediates/classes/release'
 }
 
 task sourcesJar(type: Jar) {
