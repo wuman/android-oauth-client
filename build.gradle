@@ -56,6 +56,7 @@ subprojects {
       classpath 'com.android.tools.build:gradle:1.0.1'
       classpath 'com.github.jcandksolutions.gradle:android-unit-test:2.1.1'
       classpath 'com.github.dcendents:android-maven-plugin:1.0'
+      classpath 'com.jakewharton.sdkmanager:gradle-plugin:0.12.+'
     }
   }
 
