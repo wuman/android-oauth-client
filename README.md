@@ -31,12 +31,12 @@ FEATURES
 * Provides sample applications that already work with popular social network
   services such as:
     - [Flickr](http://www.flickr.com/services/api/auth.oauth.html) (OAuth 1.0a)
-    - [Foursquare](https://developer.foursquare.com/overview/auth) (Oauth 2.0 Explicit)
-    - [GitHub](http://developer.github.com/v3/oauth/) (Oauth 2.0 Explicit)
-    - [Instagram](http://instagram.com/developer/authentication/) (Oauth 2.0 Explicit/Implicit)
-    - [LinkedIn](http://developer.linkedin.com/documents/authentication) (Oauth 2.0 Explicit)
-    - [Plurk](http://www.plurk.com/API#oauth_flow) (Oauth 1.0a)
-    - [Twitter](https://dev.twitter.com/docs/auth/3-legged-authorization) (Oauth 1.0a)
+    - [Foursquare](https://developer.foursquare.com/overview/auth) (OAuth 2.0 Explicit/Implicit)
+    - [GitHub](http://developer.github.com/v3/oauth/) (OAuth 2.0 Explicit)
+    - [Instagram](http://instagram.com/developer/authentication/) (OAuth 2.0 Implicit)
+    - [LinkedIn](http://developer.linkedin.com/documents/authentication) (OAuth 1.0a, OAuth 2.0 Explicit)
+    - [Plurk](http://www.plurk.com/API#oauth_flow) (OAuth 1.0a)
+    - [Twitter](https://dev.twitter.com/docs/auth/3-legged-authorization) (OAuth 1.0a)
 
 
 **Note on OAuth flows:** In general you should prefer OAuth 2.0 Implicit
