@@ -24,6 +24,8 @@ import com.google.api.client.auth.oauth2.BearerToken;
 import com.google.api.client.auth.oauth2.ClientParametersAuthentication;
 import com.google.api.client.auth.oauth2.Credential;
 import com.google.api.client.http.GenericUrl;
+import com.google.api.client.http.HttpRequest;
+import com.google.api.client.http.HttpRequestInitializer;
 import com.wuman.android.auth.AuthorizationDialogController;
 import com.wuman.android.auth.AuthorizationFlow;
 import com.wuman.android.auth.DialogFragmentController;
@@ -163,6 +165,10 @@ public class StravaActivity extends FragmentActivity {
                     StravaConstants.URL_AUTHORIZE)
                     .setScopes(Arrays.asList(StravaScopes.SCOPE_PUBLIC))
                     .setCredentialStore(credentialStore)
+                    .setRequestInitializer(new HttpRequestInitializer() {
+                        @Override
+                        public void initialize(HttpRequest request) throws IOException {}
+                    })
                     .build();
             // setup UI controller
             AuthorizationDialogController controller =
