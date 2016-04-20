@@ -226,7 +226,12 @@ public class AuthorizationFlow extends AuthorizationCodeFlow {
                         new HttpRequestInitializer() {
                             @Override
                             public void initialize(HttpRequest request) throws IOException {
-                                getRequestInitializer().initialize(request);
+                                HttpRequestInitializer requestInitializer = getRequestInitializer();
+                                // If HttpRequestInitializer is set, initialize it as before
+                                if (requestInitializer != null) {
+                                    requestInitializer.initialize(request);
+                                }
+                                // Also set JSON accept header
                                 request.getHeaders().setAccept("application/json");
                             }
                         });
