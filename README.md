@@ -7,14 +7,14 @@ Android OAuth Client Library (android-oauth-client)
 
 The `android-oauth-client` library helps you to easily add an OAuth flow to
 your existing Android application.  It automatically shows a customizable
-Android dialog with `WebView` to guide the user to eventually grant you an 
+Android dialog with `WebView` to guide the user to eventually grant you an
 access token.
 
-To help you manage access tokens, the library also includes an out-of-the-box 
-credential store which stores tokens in 
+To help you manage access tokens, the library also includes an out-of-the-box
+credential store which stores tokens in
 [SharedPreferences](http://d.android.com/reference/android/content/SharedPreferences.html).
 
-This client library is an Android extension to the 
+This client library is an Android extension to the
 [Google OAuth Client Library for Java](https://code.google.com/p/google-oauth-java-client/).
 
 
@@ -54,7 +54,7 @@ application, the `android-oauth-client` library can be used in 2 simple steps:
     - An `AuthorizationFlow` instance which automatically handles the OAuth flow logic,
     - An `AuthorizationUIController` which manages the UI.
 2. Call one of the 3 possible `authorize` methods on `OAuthManager`.  The call
-   may be called from any thread either synchronously or asynchronously with 
+   may be called from any thread either synchronously or asynchronously with
    an `OAuthCallback<Credential>`.
     - `OAuthManager.authorize10a()`
     - `OAuthManager.authorizeExplicitly()`
@@ -101,7 +101,7 @@ Use the provided `SharedPreferencesCredentialStore`, which automatically
 serializes access tokens to and from `SharedPreferences` in JSON format.
 
     SharedPreferencesCredentialStore credentialStore =
-        new SharedPreferencesCredentialStore(context, 
+        new SharedPreferencesCredentialStore(context,
             "preferenceFileName", new JacksonFactory());
 
 
@@ -144,7 +144,7 @@ two constructors, one taking `android.app.FragmentManager` and the other taking
 on how you instantiate the controller, either `android.app.DialogFragment` or
 `android.support.v4.app.DialogFragment` will be used.
 
-    AuthorizationUIController controller = 
+    AuthorizationUIController controller =
         new DialogFragmentController(getFragmentManager()) {
 
             @Override
@@ -206,14 +206,14 @@ HOW TO USE THE LIBRARY
 ----------------------
 
 Android OAuth Client is available for download from the [Maven Central](http://bit.ly/15XDPPe)
-repository.  You may also include it as a dependency by including the following 
+repository.  You may also include it as a dependency by including the following
 coordinates:
 
 ```xml
 <dependency>
   <groupId>com.wu-man</groupId>
   <artifactId>android-oauth-client</artifactId>
-  <version>0.0.3</version>
+  <version>0.4.5</version>
 </dependency>
 ```
 
@@ -221,18 +221,18 @@ or using Gradle
 
 ```groovy
 dependencies {
-   compile 'com.wu-man:android-oauth-client:0.0.3'
+   compile 'com.wu-man:android-oauth-client:0.4.5'
 }
 ```
 
-Starting in v0.0.3, we release in the Android library `AAR` format as well.
+As of v0.0.3, an Android library `AAR` format is available as well.
 The artifact coordinates are:
 
 ```xml
 <dependency>
   <groupId>com.wu-man</groupId>
   <artifactId>android-oauth-client</artifactId>
-  <version>0.0.3</version>
+  <version>0.4.5</version>
   <type>aar</type>
 </dependency>
 ```
@@ -241,7 +241,7 @@ The artifact coordinates are:
 HOW TO BUILD THE PROJECT
 ------------------------
 
-You should use the included Graddle wrapper to build the project with the
+You should use the included Gradle wrapper to build the project with the
 following command:
 
     ./gradlew clean build
@@ -253,10 +253,10 @@ aar file is located at `library/build/libs/library.aar`.
 CONTRIBUTE
 ----------
 
-If you would like to contribute code to android-oauth-client you can do so through 
+If you would like to contribute code to android-oauth-client you can do so through
 GitHub by forking the repository and sending a pull request.
 
-In general if you are contributing we ask you to follow the 
+In general if you are contributing we ask you to follow the
 [AOSP coding style guidelines](http://source.android.com/source/code-style.html).
 If you are using an IDE such as Eclipse, it is easiest to use the
 [AOSP style formatters](http://source.android.com/source/using-eclipse.html#eclipse-formatting).
@@ -286,13 +286,12 @@ LICENSE
 
         http://www.apache.org/licenses/LICENSE-2.0
 
-    Unless required by applicable law or agreed to in writing, software 
-    distributed under the License is distributed on an "AS IS" BASIS, 
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-    See the License for the specific language governing permissions and 
+    See the License for the specific language governing permissions and
     limitations under the License.
 
 
 
 [![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/wuman/android-oauth-client/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
-
