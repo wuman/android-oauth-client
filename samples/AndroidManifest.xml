@@ -77,6 +77,12 @@
                 <category android:name="com.wuman.oauth.samples.EXAMPLE"/>
             </intent-filter>
         </activity>
+        <activity android:configChanges="screenSize|orientation" android:label="@string/sample_strava" android:name=".strava.StravaActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+                <category android:name="com.wuman.oauth.samples.EXAMPLE"/>
+            </intent-filter>
+        </activity>
         <activity android:configChanges="screenSize|orientation" android:label="@string/sample_customizedui" android:name="com.wuman.oauth.samples.CustomizedProgressActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>

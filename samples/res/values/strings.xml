@@ -18,6 +18,7 @@
     <string name="sample_instagram">Instagram (OAuth 2.0 Implicit)</string>
     <string name="sample_twitter">Twitter (OAuth 1.0a)</string>
     <string name="sample_plurk">Plurk (OAuth 1.0a)</string>
+    <string name="sample_strava">Strava (OAuth 2.0 Explicit)</string>
     <string name="token_foursquare_implicit">foursquareimplicit</string>
     <string name="token_foursquare_explicit">foursquareexplicit</string>
     <string name="token_linkedin_explicit">linkedinexplicit</string>
@@ -27,6 +28,7 @@
     <string name="token_instagram">instagram</string>
     <string name="token_twitter">twitter</string>
     <string name="token_plurk">plurk</string>
+    <string name="token_strava">strava</string>
     <string name="token_customui">customui</string>
     <string name="licenses">Open Source Licenses</string>
     <string name="full_screen">Full screen auth page</string>
