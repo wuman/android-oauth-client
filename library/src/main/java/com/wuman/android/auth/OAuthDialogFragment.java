@@ -187,6 +187,7 @@ class OAuthDialogFragment extends DialogFragmentCompat {
             pframe.setGravity(Gravity.CENTER);
             ProgressBar progress =
                 new ProgressBar(context, null, android.R.attr.progressBarStyleLarge);
+            progress.setId(android.R.id.progress);
             pframe.addView(progress,
                 new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT));
             TextView progressText = new TextView(context, null, android.R.attr.textViewStyle);
