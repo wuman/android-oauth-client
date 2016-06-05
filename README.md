@@ -199,9 +199,6 @@ application also has examples for customizing the Dialog UI as well as OAuth
 integrations for popular social network services such as Flickr, LinkedIn,
 Twitter, etc.
 
-You may also download/install the app from the [Google Play Store](http://bit.ly/15zr4Mx).
-
-
 HOW TO USE THE LIBRARY
 ----------------------
 
