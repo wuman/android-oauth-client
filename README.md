@@ -76,13 +76,13 @@ To start the OAuth flow and obtain an access token, call one of the `authorize()
 methods according to the authorization flow of your choice.
 
 You may invoke the `authorize()` method *synchronously*:
-
+```java
     Credential credential = oauth.authorizeImplicitly("userId", null, null).getResult();
     // continue to make API queries with credential.getAccessToken()
-
+```
 You may also invoke the `authorize()` method *asynchronously* with an `OAuthCallback`,
 executed on a `android.os.Handler` of your choice.
-
+```java
     OAuthCallback<Credential> callback = new OAuthCallback<Credential>() {
         @Override public void run(OAuthFuture<Credential> future) {
             Credential credential = future.getResult();
@@ -90,7 +90,7 @@ executed on a `android.os.Handler` of your choice.
         }
     };
     oauth.authorizeImplicitly("userId", callback, handler);
-
+```
 Note that if a `Handler` is not supplied, the `callback` will be invoked on the
 main thread.
 
@@ -99,16 +99,16 @@ main thread.
 
 Use the provided `SharedPreferencesCredentialStore`, which automatically
 serializes access tokens to and from `SharedPreferences` in JSON format.
-
+```java
     SharedPreferencesCredentialStore credentialStore =
         new SharedPreferencesCredentialStore(context,
             "preferenceFileName", new JacksonFactory());
-
+```
 
 ### AuthorizationFlow ###
 
 An `AuthorizationFlow` instance may be obtained via its `Builder`:
-
+```java
     AuthorizationFlow.Builder builder = new AuthorizationFlow.Builder(
         BearerToken.authorizationHeaderAccessMethod(),
         AndroidHttp.newCompatibleTransport(),
@@ -119,15 +119,15 @@ An `AuthorizationFlow` instance may be obtained via its `Builder`:
         "https://socialservice.com/oauth2/authorize");
     builder.setCredentialStore(credentialStore);
     AuthorizationFlow flow = builder.build();
-
+```
 For OAuth 2.0 flows, you may wish to add OAuth scopes:
-
+```java
     builder.setScopes(Arrays.asList("scope1", "scope2"));
-
+```
 For the OAuth 1.0a flow, you need to set the temporary token request URL:
-
+```java
     builder.setTemporaryTokenRequestUrl("https://socialservice.com/oauth/requestToken");
-
+```
 Note that `CLIENT_SECRET` may be omitted and be replaced with a `null` value
 for the OAuth 2.0 Implicit Authorization flow.
 
@@ -143,7 +143,7 @@ two constructors, one taking `android.app.FragmentManager` and the other taking
 `android.support.v4.app.FragmentManager` as the sole input parameter.  Depending
 on how you instantiate the controller, either `android.app.DialogFragment` or
 `android.support.v4.app.DialogFragment` will be used.
-
+```java
     AuthorizationUIController controller =
         new DialogFragmentController(getFragmentManager()) {
 
@@ -158,7 +158,7 @@ on how you instantiate the controller, either `android.app.DialogFragment` or
             }
 
         };
-
+```
 
 PROGUARD
 --------
