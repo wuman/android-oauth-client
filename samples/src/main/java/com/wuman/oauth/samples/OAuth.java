@@ -41,7 +41,19 @@ public class OAuth {
             final String redirectUri,
             List<String> scopes) {
         return newInstance(context, fragmentManager, client,
-                authorizationRequestUrl, tokenServerUrl, redirectUri, scopes, null);
+                authorizationRequestUrl, tokenServerUrl, redirectUri, scopes, null, null);
+    }
+
+    public static OAuth newInstance(Context context,
+                                    FragmentManager fragmentManager,
+                                    ClientParametersAuthentication client,
+                                    String authorizationRequestUrl,
+                                    String tokenServerUrl,
+                                    final String redirectUri,
+                                    List<String> scopes,
+                                    String temporaryTokenRequestUrl) {
+        return newInstance(context, fragmentManager, client,
+                authorizationRequestUrl, tokenServerUrl, redirectUri, scopes, temporaryTokenRequestUrl, null);
     }
 
     public static OAuth newInstance(Context context,
@@ -51,7 +63,8 @@ public class OAuth {
             String tokenServerUrl,
             final String redirectUri,
             List<String> scopes,
-            String temporaryTokenRequestUrl) {
+            String temporaryTokenRequestUrl,
+            List<String> responseTypes) {
         Preconditions.checkNotNull(client.getClientId());
         boolean fullScreen = context.getSharedPreferences("Preference", 0)
             .getBoolean(SamplesActivity.KEY_AUTH_MODE, false);
@@ -70,6 +83,10 @@ public class OAuth {
                 authorizationRequestUrl)
                 .setScopes(scopes)
                 .setCredentialStore(credentialStore);
+        // set response types
+        if (responseTypes != null) {
+            flowBuilder.setResponseTypes(responseTypes);
+        }
         // set temporary token request url for 1.0a flow if applicable
         if (!TextUtils.isEmpty(temporaryTokenRequestUrl)) {
             flowBuilder.setTemporaryTokenRequestUrl(temporaryTokenRequestUrl);
