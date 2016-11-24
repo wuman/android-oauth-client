@@ -27,6 +27,8 @@ import com.google.api.client.http.HttpTransport;
 import com.google.api.client.json.JsonFactory;
 import com.google.api.client.util.Beta;
 import com.google.api.client.util.Clock;
+import com.google.api.client.util.Lists;
+import com.google.api.client.util.Preconditions;
 import com.wuman.android.auth.oauth.OAuthHmacCredential;
 import com.wuman.android.auth.oauth2.explicit.LenientAuthorizationCodeTokenRequest;
 import com.wuman.android.auth.oauth2.implicit.ImplicitResponseUrl;
@@ -61,7 +63,7 @@ import java.util.logging.Logger;
  * {@link #createAndStoreCredential(ImplicitResponseUrl, String)} to store and
  * obtain a credential for accessing protected resources.
  * </p>
- * 
+ *
  * @author David Wu
  */
 public class AuthorizationFlow extends AuthorizationCodeFlow {
@@ -73,6 +75,9 @@ public class AuthorizationFlow extends AuthorizationCodeFlow {
 
     /** Temporary token request URL */
     private String temporaryTokenRequestUrl;
+
+    /** Collection of response types. */
+    private Collection<String> responseTypes = Lists.newArrayList();
 
     /**
      * Listener for a created credential after a successful token response in
@@ -94,7 +99,7 @@ public class AuthorizationFlow extends AuthorizationCodeFlow {
          * Typical use is to parse additional fields from the credential
          * created, such as an ID token.
          * </p>
-         * 
+         *
          * @param credential created credential
          * @param implicitResponse successful implicit response URL
          */
@@ -104,7 +109,7 @@ public class AuthorizationFlow extends AuthorizationCodeFlow {
         /**
          * Notifies of a created credential after a successful token response in
          * {@link AuthorizationFlow#createAndStoreCredential(OAuthCredentialsResponse, String)}
-         * 
+         *
          * @param credential
          * @param oauth10aResponse
          * @throws IOException
@@ -117,11 +122,12 @@ public class AuthorizationFlow extends AuthorizationCodeFlow {
         super(builder);
         credentialCreatedListener = builder.getGeneralCredentialCreatedListener();
         temporaryTokenRequestUrl = builder.getTemporaryTokenRequestUrl();
+        responseTypes = builder.getResponseTypes();
     }
 
     /**
      * Returns the Request Token URL in OAuth 1.0a.
-     * 
+     *
      * @return
      */
     public final String getTemporaryTokenRequestUrl() {
@@ -131,7 +137,7 @@ public class AuthorizationFlow extends AuthorizationCodeFlow {
     /**
      * Loads the OAuth 1.0a credential of the given user ID from the credential
      * store.
-     * 
+     *
      * @param userId user ID or {@code null} if not using a persisted credential
      *            store
      * @return OAuth 1.0a credential found in the credential store of the given
@@ -152,7 +158,7 @@ public class AuthorizationFlow extends AuthorizationCodeFlow {
      * Returns the response of a Request Token request as defined in <a
      * href="http://oauth.net/core/1.0a/#auth_step1">Obtaining an Unauthorized
      * Request Token</a>.
-     * 
+     *
      * @param redirectUri the {@code oauth_callback} as defined in <a
      *            href="http://oauth.net/core/1.0a/#rfc.section.6.1.1">Consumer
      *            Obtains a Request Token</a>
@@ -178,7 +184,7 @@ public class AuthorizationFlow extends AuthorizationCodeFlow {
      * defined in <a
      * href="http://oauth.net/core/1.0a/#rfc.section.6.2.1">Consumer Directs the
      * User to the Service Provider</a>.
-     * 
+     *
      * @param temporaryToken
      * @return
      */
@@ -194,13 +200,13 @@ public class AuthorizationFlow extends AuthorizationCodeFlow {
      * code. This step is defined in <a
      * href="http://oauth.net/core/1.0a/#auth_step3">Obtaining an Access
      * Token</a>.
-     * 
+     *
      * @param temporaryCredentials
      * @param verifierCode
      * @return
      */
     public OAuthGetAccessToken new10aTokenRequest(OAuthCredentialsResponse temporaryCredentials,
-            String verifierCode) {
+                                                  String verifierCode) {
         OAuthGetAccessToken request = new OAuthGetAccessToken(getTokenServerEncodedUrl());
         request.temporaryToken = temporaryCredentials.token;
         request.transport = getTransport();
@@ -246,10 +252,10 @@ public class AuthorizationFlow extends AuthorizationCodeFlow {
      * {@link #getAuthorizationServerEncodedUrl()}, {@link #getClientId()}, and
      * {@link #getScopes()}. Sample usage:
      * </p>
-     * 
+     *
      * <pre>
      * private AuthorizationFlow flow;
-     * 
+     *
      * public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
      *     String url = flow.newExplicitAuthorizationUrl().setState(&quot;xyz&quot;)
      *             .setRedirectUri(&quot;https://client.example.com/rd&quot;).build();
@@ -270,10 +276,10 @@ public class AuthorizationFlow extends AuthorizationCodeFlow {
      * {@link #getAuthorizationServerEncodedUrl()}, {@link #getClientId()}, and
      * {@link #getScopes()}. Sample usage:
      * </p>
-     * 
+     *
      * <pre>
      * private AuthorizationFlow flow;
-     * 
+     *
      * public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
      *     String url = flow.newImplicitAuthorizationUrl().setState(&quot;xyz&quot;)
      *             .setRedirectUri(&quot;https://client.example.com/rd&quot;).build();
@@ -282,14 +288,19 @@ public class AuthorizationFlow extends AuthorizationCodeFlow {
      * </pre>
      */
     public BrowserClientRequestUrl newImplicitAuthorizationUrl() {
-        return new BrowserClientRequestUrl(getAuthorizationServerEncodedUrl(), getClientId())
+        BrowserClientRequestUrl browserClientRequestUrl = new BrowserClientRequestUrl(getAuthorizationServerEncodedUrl(), getClientId())
                 .setScopes(getScopes());
+        Collection<String> responseTypes = getResponseTypes();
+        if (responseTypes != null && !responseTypes.isEmpty()) {
+            browserClientRequestUrl.setResponseTypes(getResponseTypes());
+        }
+        return browserClientRequestUrl;
     }
 
     /**
      * Creates a new credential for the given user ID based on the given token
      * response and store in the credential store.
-     * 
+     *
      * @param response OAuth 1.0a authorization token response
      * @param userId user ID or {@code null} if not using a persisted credential
      *            store
@@ -297,7 +308,7 @@ public class AuthorizationFlow extends AuthorizationCodeFlow {
      * @throws IOException
      */
     public OAuthHmacCredential createAndStoreCredential(OAuthCredentialsResponse response,
-            String userId) throws IOException {
+                                                        String userId) throws IOException {
         OAuthHmacCredential credential = new10aCredential(userId)
                 .setAccessToken(response.token)
                 .setTokenSharedSecret(response.tokenSecret);
@@ -314,7 +325,7 @@ public class AuthorizationFlow extends AuthorizationCodeFlow {
     /**
      * Creates a new credential for the given user ID based on the given token
      * response and store in the credential store.
-     * 
+     *
      * @param response implicit authorization token response
      * @param userId user ID or {@code null} if not using a persisted credential
      *            store
@@ -338,7 +349,7 @@ public class AuthorizationFlow extends AuthorizationCodeFlow {
 
     /**
      * Returns a new OAuth 1.0a credential instance based on the given user ID.
-     * 
+     *
      * @param userId user ID or {@code null} if not using a persisted credential
      *            store
      */
@@ -365,7 +376,7 @@ public class AuthorizationFlow extends AuthorizationCodeFlow {
 
     /**
      * Returns a new OAuth 2.0 credential instance based on the given user ID.
-     * 
+     *
      * @param userId user ID or {@code null} if not using a persisted credential
      *            store
      */
@@ -387,6 +398,14 @@ public class AuthorizationFlow extends AuthorizationCodeFlow {
         return builder.build();
     }
 
+
+    /**
+     * Returns the a collection of response types.
+     */
+    public final Collection<String> getResponseTypes() {
+        return this.responseTypes;
+    }
+
     /**
      * Authorization flow builder.
      * <p>
@@ -401,6 +420,9 @@ public class AuthorizationFlow extends AuthorizationCodeFlow {
 
         /** Temporary token request URL */
         String temporaryTokenRequestUrl;
+
+        /** Collection of response types. */
+        Collection<String> responseTypes = Lists.newArrayList();
 
         /**
          * @param method method of presenting the access token to the resource
@@ -417,12 +439,12 @@ public class AuthorizationFlow extends AuthorizationCodeFlow {
          * @param authorizationServerEncodedUrl authorization server encoded URL
          */
         public Builder(AccessMethod method,
-                HttpTransport transport,
-                JsonFactory jsonFactory,
-                GenericUrl tokenServerUrl,
-                HttpExecuteInterceptor clientAuthentication,
-                String clientId,
-                String authorizationServerEncodedUrl) {
+                       HttpTransport transport,
+                       JsonFactory jsonFactory,
+                       GenericUrl tokenServerUrl,
+                       HttpExecuteInterceptor clientAuthentication,
+                       String clientId,
+                       String authorizationServerEncodedUrl) {
             super(method,
                     transport,
                     jsonFactory,
@@ -442,7 +464,7 @@ public class AuthorizationFlow extends AuthorizationCodeFlow {
 
         /**
          * Sets the temporary token request URL.
-         * 
+         *
          * @param temporaryTokenRequestUrl
          * @return
          */
@@ -453,11 +475,20 @@ public class AuthorizationFlow extends AuthorizationCodeFlow {
 
         /**
          * Returns the temporary token request URL.
-         * 
+         *
          * @return
          */
         public String getTemporaryTokenRequestUrl() {
             return temporaryTokenRequestUrl;
+        }
+
+        /**
+         * Returns the response types.
+         *
+         * @return
+         */
+        public Collection<String> getResponseTypes() {
+            return responseTypes;
         }
 
         @Override
@@ -528,6 +559,11 @@ public class AuthorizationFlow extends AuthorizationCodeFlow {
         @Override
         public Builder setScopes(Collection<String> scopes) {
             return (Builder) super.setScopes(scopes);
+        }
+
+        public Builder setResponseTypes(Collection<String> responseTypes) {
+            this.responseTypes = Preconditions.checkNotNull(responseTypes);
+            return this;
         }
 
         /**
