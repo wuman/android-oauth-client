@@ -351,10 +351,10 @@ public class CustomizedProgressActivity extends FragmentActivity {
             return false;
         }
 
-		@Override
-		public boolean isDomStorageEnabledForWebView() {
-			return true;
-		}
+        @Override
+        public boolean isDomStorageEnabledForWebView() {
+            return true;
+        }
     }
 
 }
