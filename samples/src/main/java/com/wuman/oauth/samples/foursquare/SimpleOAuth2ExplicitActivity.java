@@ -185,6 +185,10 @@ public class SimpleOAuth2ExplicitActivity extends FragmentActivity {
                             return false;
                         }
 
+						@Override
+						public boolean isDomStorageEnabledForWebView() {
+							return true;
+						}
                     };
             // instantiate an OAuthManager instance
             oauth = new OAuthManager(flow, controller);

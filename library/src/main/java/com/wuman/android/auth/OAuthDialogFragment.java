@@ -286,6 +286,10 @@ class OAuthDialogFragment extends DialogFragmentCompat {
         if (mController.isJavascriptEnabledForWebView()) {
             webSettings.setJavaScriptEnabled(true);
         }
+		
+		if (mController.isDomStorageEnabledForWebView()) {
+			webSettings.setDomStorageEnabled(true);
+		}
 
         if (mController.disableWebViewCache()) {
             webSettings.setAppCacheEnabled(false);

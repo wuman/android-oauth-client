@@ -183,6 +183,11 @@ public class SimpleOAuth2ImplicitActivity extends FragmentActivity {
                         public boolean removePreviousCookie() {
                             return false;
                         }
+						
+						@Override
+						public boolean isDomStorageEnabledForWebView() {
+							return true;
+						}
 
                     };
             // instantiate an OAuthManager instance

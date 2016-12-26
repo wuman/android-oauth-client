@@ -92,5 +92,12 @@ public interface AuthorizationDialogController extends AuthorizationUIController
      *         otherwise.
      */
     boolean removePreviousCookie();
-
+	
+	/**
+     * Indicate whether DOM storage (localStorage) should be enabled for the WebView.
+     * 
+     * @return {@code true} if DOM storage should be enabled, {@code false}
+     *         otherwise.
+     */
+    boolean isDomStorageEnabledForWebView();
 }

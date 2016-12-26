@@ -98,7 +98,11 @@ public class OAuth {
                     public boolean removePreviousCookie() {
                         return false;
                     }
-
+					
+					@Override
+					public boolean isDomStorageEnabledForWebView() {
+						return true;
+					}
                 };
         return new OAuth(flow, controller);
     }
