@@ -186,7 +186,7 @@ public class SimpleOAuth2ImplicitActivity extends FragmentActivity {
 						
                         @Override
                         public boolean isDomStorageEnabledForWebView() {
-                                return true;
+                            return true;
                         }
 
                     };
