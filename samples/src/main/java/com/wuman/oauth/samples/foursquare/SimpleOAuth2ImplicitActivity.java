@@ -184,10 +184,10 @@ public class SimpleOAuth2ImplicitActivity extends FragmentActivity {
                             return false;
                         }
 						
-						@Override
-						public boolean isDomStorageEnabledForWebView() {
-							return true;
-						}
+                        @Override
+                        public boolean isDomStorageEnabledForWebView() {
+                                return true;
+                        }
 
                     };
             // instantiate an OAuthManager instance
