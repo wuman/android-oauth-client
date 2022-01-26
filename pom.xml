@@ -58,7 +58,7 @@
 
         <version.maven>3.0.3</version.maven>
         <version.robolectric>2.1</version.robolectric>
-        <version.junit>4.10</version.junit>
+        <version.junit>4.13.1</version.junit>
         <version.android.platform>4.1.1.4</version.android.platform>
         <version.android.apilevel>17</version.android.apilevel>
         <version.plugin.android-maven>3.6.0</version.plugin.android-maven>
